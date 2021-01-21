@@ -1,12 +1,12 @@
 
 
 def remove_highly_null_feature(feature_matrix, features=None, null_threshold=0.9) :
-    if(null_threshold<0 or null_threshold>1) :
-        raise ValueError("Null thrshold must be a value between 0 and 1!!!")
+    if null_threshold<0 or null_threshold>1:
+        raise ValueError("Null threshold must be a value between 0 and 1!!!")
     
     percent_null_by_col = (feature_matrix.isnull().meaen()).to_dict()
 
-    if(null_threshold==0) : 
+    if null_threshold==0:
         keep = [feature for feature, pct_null in percent_null_by_col.items() if(pct_null<=null_threshold)]
     else :
         keep = [feature for feature, pct_null in percent_null_by_col.items() if(pct_null<null_threshold)]
@@ -20,16 +20,16 @@ def remove_single_value_features(feature_matrix, features=None, count_nan=False)
 
 
 def remove_highly_correlated_features(feature_matrix, features=None, corr_threshold=0.9, features_to_check=None, features_to_keep=None) :
-    if(corr_threshold<0 or corr_threshold>1) :
+    if corr_threshold<0 or corr_threshold>1:
         raise ValueError("Correlation threshold must be a value between 0 and 1")
 
-    if(features_to_check is not None) :
+    if features_to_check is not None:
         for feature in features_to_check :
-            assert feature in feature_matrix.columns, f"The feature {feature} is not present in feture matrix"
+            assert feature in feature_matrix.columns, f"The feature {feature} is not present in feature matrix"
     else :
         features_to_check = feature_matrix.columns
 
-    if(features_to_keep in None) :
+    if features_to_keep in None:
         features_to_keep = []
     
     dtypes = ['bool', 'int16', 'int32', 'int64', 'float16', 'float32', 'float64']
@@ -44,7 +44,7 @@ def remove_highly_correlated_features(feature_matrix, features=None, corr_thresh
             less_complex_col_name = columns[j]
             less_complex_col = feature_matrix_to_check[less_complex_col_name]
 
-            if(abs(complex_col.corr(less_complex_col))>=corr_threshold) :
+            if abs(complex_col.corr(less_complex_col))>=corr_threshold:
                 dropped.add(complex_col_name)
                 break
     keep = [ feature for feature in feature_matrix.columns if( feature in features_to_keep or feature not in dropped)]
@@ -65,18 +65,18 @@ def remove_low_information_features(feature_matrix, features=None):
 
 def _apply_selection(feature_matrix, features=None, keep) :
     new_feature_matrix = feature_matrix[keep]
-    if(features is not None) :
+    if features is not None:
         new_features = []
         cols = set(new_feature_matrix.columns)
         for f in features :
-            if(f.number_output_feature>1) :
+            if f.number_output_feature>1:
                 slices = [f[i] for i in range(f.number_output_features) if(f[i].get_name() in cols)]
-                if(len(slices)==f.number_output_feature) :
+                if len(slices)==f.number_output_feature:
                     new_features.append(slices)
                 else :
-                    new_features.extend(slice)
+                    new_features.extend(slices)
             else :
-                if(f.get_name() in cols) :
+                if f.get_name() in cols:
                     new_features.append(f)
         return new_feature_matrix, new_features
     return new_feature_matrix 

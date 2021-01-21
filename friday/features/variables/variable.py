@@ -146,7 +146,7 @@ class Boolean(Variables) :
         super(Boolean, self).__init__(id, entity, name=name)
         true_default = [ 1, "true", True, "True", 't', 'T', 'yes', 'Yes']
         false_default = [ 0, "false", False, 'False', 'f', 'F', 'no', 'No']
-        self.true_values = true_values or true_values
+        self.true_values = true_values or true_default
         self.false_values = false_values or false_default
 
     def to_description(self) :
