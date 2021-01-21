@@ -1,14 +1,9 @@
 
+def parse_xml(path) :
+    pass
 
-class Parser:
-    def __init__(self, path) :
-        self.path = path
+def parse_json(path) :
+    pass
 
-    def parse_xml(self, path) :
-        pass
-
-    def parse_json(self, path) :
-        pass
-
-    def parse_yaml(self, path) :
-        pass
+def parse_yaml(path) :
+    pass
