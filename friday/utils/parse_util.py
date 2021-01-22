@@ -2,9 +2,9 @@ import json
 import yaml
 from yaml import YAMLError, scanner
 try:
-    from yaml import CLoader as Loader, CDumper as Dumper
+    from yaml import CLoader as Loader
 except ImportError:
-    from yaml import Loader, Dumper
+    from yaml import Loader
 
 def parse_xml(path) :
     pass
