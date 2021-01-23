@@ -5,9 +5,26 @@ try:
     from yaml import CLoader as Loader
 except ImportError:
     from yaml import Loader
+import xml.etree.ElementTree as XMLLoader
+
+def etree_to_dict(t):
+    d = {t.tag : map(etree_to_dict, t.iterchildren())}
+    d.update(('@' + k, v) for k, v in t.attrib.iteritems())
+    d['text'] = t.text
+    return d
 
 def parse_xml(path) :
-    pass
+    e = None
+    try:
+        base_tree = XMLLoader.parse(path)
+    except FileNotFoundError:
+        err = FileNotFoundError
+    except PermissionError:
+        err = PermissionError
+    except Exception as e:
+        err = "Random error" + e.args
+    return etree_to_dict(base_tree.getroot()), err
+
 
 def parse_json(path) :
     entitiySetDetails = None
