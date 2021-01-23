@@ -7,6 +7,7 @@ except ImportError:
     from yaml import Loader
 import xml.etree.ElementTree as XMLLoader
 
+# TODO: Check if this works as needed
 def etree_to_dict(t):
     d = {t.tag : map(etree_to_dict, t.iterchildren())}
     d.update(('@' + k, v) for k, v in t.attrib.iteritems())
