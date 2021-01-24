@@ -40,7 +40,7 @@ def parse_json(path) :
     except json.decoder.JSONDecodeError as JSONDecodeError:
         err = JSONDecodeError
     except:
-        err = "Unable to parse the file"
+        err ="Unable to parse the file"
 
     return entitiySetDetails, err
 
