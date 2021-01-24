@@ -40,7 +40,7 @@ class Features(object) :
             types = entity["variable_types"]
             variable_types = {}
             for k,v in types :
-                variable_types[k] = DEFAULT_DTYPE_VALUES[v]
+                variable_types[k] = DEFAULT_VRIABLE_TYPES[v]
             entity_set = entity_set.entity_from_dataframe(
                 entity_id=entity_id,
                 dataframe=dataframe,
