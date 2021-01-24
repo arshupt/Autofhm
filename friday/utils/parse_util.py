@@ -2,9 +2,9 @@ import json
 import yaml
 from yaml import YAMLError, scanner
 try:
-    from yaml import CLoader as Loader, CDumper as Dumper
+    from yaml import CLoader as Loader
 except ImportError:
-    from yaml import Loader, Dumper
+    from yaml import Loader
 
 def parse_xml(path) :
     pass
@@ -22,7 +22,7 @@ def parse_json(path) :
     except json.decoder.JSONDecodeError as JSONDecodeError:
         err = JSONDecodeError
     except:
-        err = "Unable to parse the file"
+        err ="Unable to parse the file"
 
     return entitiySetDetails, err
 
