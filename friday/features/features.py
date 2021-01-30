@@ -7,8 +7,8 @@ class Features(object) :
         self, 
         id, 
         target_entity,
-        primitives,
-        serial, 
+        primitives=None,
+        serial=False, 
         entities=None,
         dataframes=None, 
         props=None,
@@ -31,7 +31,7 @@ class Features(object) :
     def build(self) :
         entity_set = self.create_entity_set(self.entities, self.relationships)
 
-        feature_matrix, feture_names = dfs(
+        feature_matrix, _ = dfs(
             entity_set=entity_set,
             target_entity=self.target_entity, 
             **self.props)
@@ -45,6 +45,8 @@ class Features(object) :
         feature_matrix = self.reorder(feature_matrix, target_entity_index)
 
         feature_matrix = self.process_feature_matrix(feature_matrix, self.corr_threshold)
+
+        return feature_matrix
 
 
     def create_entity_set(self, entities, relationships, normalize_entity_id=None) :
