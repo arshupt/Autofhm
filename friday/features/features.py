@@ -1,5 +1,5 @@
 from featuretools import *
-from friday.utils import *
+from utils import *
 import numpy as np
 
 class Features(object) :

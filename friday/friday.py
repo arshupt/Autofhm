@@ -1,5 +1,5 @@
-from friday.features import Feature
-from friday.utils.parse_util import parse_json, parse_xml, parse_yaml
+from features.features import Features
+from utils.parse_util import parse_json, parse_xml, parse_yaml
 import pandas as pd
 import os
 import warnings
@@ -65,7 +65,7 @@ def fit(config=None, dataframe_path=None, dataframe=None) :
         split_ratio=0.2,
         corr_threshold=0.7, 
 
-        feature = Feature(
+        feature = Features(
             id, 
             target_entity, 
             primitives=primitives,
@@ -79,7 +79,7 @@ def fit(config=None, dataframe_path=None, dataframe=None) :
             )
 
         dataframe = feature.build()
-            
+fit()           
 
 
     
