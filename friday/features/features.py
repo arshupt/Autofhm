@@ -29,6 +29,11 @@ class Features(object) :
         self.serial = serial
 
     def build(self) :
+        """
+        creats entities and performs DFS. gives :feature_matrix: 
+
+        :feature_matrix: -  the final matrix with desired values
+        """
         entity_set = self.create_entity_set(self.entities, self.relationships)
 
         feature_matrix, _ = dfs(
@@ -50,6 +55,9 @@ class Features(object) :
 
 
     def create_entity_set(self, entities, relationships, normalize_entity_id=None) :
+        """
+        converts the dataframe entities to feature tool Entity class object
+        """
         entity_set = EntitySet(id=self.id)
 
         for entity in entities :
@@ -68,6 +76,11 @@ class Features(object) :
             )
 
         def entity_relationships(relationships) :
+            ''' Add realationship from the config file into the coresponding entity. 
+            :relationships: - It the input array of realtionsships of eath enity
+
+            This attach the entity object with 
+            '''
             for relationship in relationships :
                 table1 = entity_set[relationship["table1"]["name"]][relationship["table1"]["column"]]
                 table2 = entity_set[relationship["table2"]["name"]][relationship["table2"]["column"]]
@@ -95,6 +108,8 @@ class Features(object) :
         return feature_matrix
 
     def process_feature_matrix(self, feature_matrix, corr_threshold=None) :
+        """ uses the correlation matrix and the threshhold to select (by setting as :True:) those columns that have correlation above :corr_threshold:
+        """
         corr_matrix = feature_matrix.corr().abs() 
 
         upper = corr_matrix.where(

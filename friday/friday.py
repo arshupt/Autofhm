@@ -5,6 +5,9 @@ import os
 import warnings
 
 def fit(config=None, dataframe_path=None, dataframe=None) : 
+    """
+    loads the config file parse it and creates dataframe and builds the feature matrix.
+    """
    
     feature_config = None
     model_config = None
@@ -80,6 +83,3 @@ def fit(config=None, dataframe_path=None, dataframe=None) :
 
         dataframe = feature.build()
 fit()           
-
-
-    
