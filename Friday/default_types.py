@@ -1,4 +1,4 @@
-from featuretools.variable_types import *
+from featuretools.variable_types import Categorical, Numeric, Boolean, Discrete, Index, Id, Datetime, Timedelta, Text
 
 DEFAULT_VARIABLE_TYPES = {
     "categorical": Categorical,

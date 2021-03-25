@@ -1,21 +1,23 @@
 import json
 import yaml
 from yaml import YAMLError, scanner
+
 try:
     from yaml import CLoader as Loader
 except ImportError:
     from yaml import Loader
 import xml.etree.ElementTree as XMLLoader
 
-# TODO: Check if this works as needed
+
 def etree_to_dict(t):
-    d = {t.tag : map(etree_to_dict, t.iterchildren())}
+    d = {t.tag: map(etree_to_dict, t.iterchildren())}
     d.update(('@' + k, v) for k, v in t.attrib.iteritems())
     d['text'] = t.text
     return d
 
-def parse_xml(path) :
-    e = None
+
+def parse_xml(path):
+    err = None
     try:
         base_tree = XMLLoader.parse(path)
     except FileNotFoundError:
@@ -27,36 +29,37 @@ def parse_xml(path) :
     return etree_to_dict(base_tree.getroot()), err
 
 
-def parse_json(path) :
-    entitiySetDetails = None
+def parse_json(path):
+    entitySetDetails = None
     err = None
-    try :
-        with open(path) as stream :
-            entitiySetDetails = json.load(stream)
+    try:
+        with open(path) as stream:
+            entitySetDetails = json.load(stream)
+            
     except FileNotFoundError:
         err = FileNotFoundError
     except PermissionError:
         err = PermissionError
     except json.decoder.JSONDecodeError as JSONDecodeError:
         err = JSONDecodeError
-    except:
-        err ="Unable to parse the file"
+    except Exception as e:
+        err = "Random error" + e.args
 
-    return entitiySetDetails, err
+    return entitySetDetails, err
 
 
-def parse_yaml(path) :
-    entitiySetDetails = None
+def parse_yaml(path):
+    entitySetDetails = None
     err = None
-    try :
-        with open(path) as stream :
-            entitiySetDetails = yaml.load(stream, Loader=Loader)
+    try:
+        with open(path) as stream:
+            entitySetDetails = yaml.load(stream, Loader=Loader)
     except PermissionError:
         err = PermissionError
     except FileNotFoundError:
         err = FileNotFoundError
-    except YAMLError: 
+    except YAMLError:
         err = YAMLError
-    except :
-        err = "Unable to parse the file"
-    return entitiySetDetails, err
+    except Exception as e:
+        err = "Random error" + e.args
+    return entitySetDetails, err
