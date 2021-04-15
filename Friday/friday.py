@@ -4,8 +4,6 @@ import pandas as pd
 import numpy as np
 import os
 import warnings
-import seaborn as sns
-from matplotlib import pyplot as plt
 
 
 def fit(config=None):
@@ -71,9 +69,9 @@ def fit(config=None):
     )
 
     dataframe = feature.build()
-    #print(dataframe)
+    print(dataframe)
 
     
 
-fit("/home/randheer/AutoML/Friday/config.json")
+fit("D:\\arshu\\Documents\\Main Project\\Code\\AutoML\\Friday\\config.json")
 

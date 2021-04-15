@@ -56,7 +56,8 @@ class Features(object):
         df = self.scale_values(self.scale_mode)
         self.feature_matrix = self.reorder(self.feature_matrix, df)
 
-        X_train, X_test, y_train, y_test = self.test_train_split(df))
+        X_train, X_test, y_train, y_test = self.test_train_split(df)
+        return X_train, X_test, y_train, y_test
 
     def create_entity_set(self, entities, relationships):
         entity_set = EntitySet(id=self.id)
