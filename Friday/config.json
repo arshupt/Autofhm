@@ -16,7 +16,7 @@
                     "petal_width": "numerical"
                     },
                 "index": "Index",
-                "dataframe_path": "/home/randheer/AutoML/Dataset/iris.csv"
+                "dataframe_path": "Dataset/iris.csv"
             }
         ],
         "relationship": [
@@ -24,7 +24,7 @@
         "primitives": {
         },
         "datapath" : [
-            "/home/randheer/AutoML/friday/config.json"
+            "friday/config.json"
         ]
     },
     "model" : {

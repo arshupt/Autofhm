@@ -71,9 +71,8 @@ def fit(config=None):
     )
 
     dataframe = feature.build()
-    #print(dataframe)
+    # print(dataframe)
 
     
 
-fit("/home/randheer/AutoML/Friday/config.json")
-
+fit("Friday/config.json")
