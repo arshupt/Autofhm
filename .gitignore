@@ -1,5 +1,3 @@
-/.idea
-/friday/__pycache__
-/friday/features/__pycache__
-/friday/utils/__pycache__
-
+/Friday/__pycache__
+/.venv
+/.vscode/settings.json
