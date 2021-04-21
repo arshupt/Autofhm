@@ -148,7 +148,7 @@ class GeneticAlgo :
                 verbose=self.verbosity, max_time_mins=self.max_time_mins)
 
         except (KeyboardInterrupt, SystemExit):
-            self._pbar.write('TPOT closed prematurely. Will use the current best pipeline.')
+            print('Keyboard interrupt!. Will use the best pipeline so far')
 
         finally:
 
