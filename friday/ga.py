@@ -130,11 +130,10 @@ class GeneticAlgo :
             total_evals = self.offspring_size * self.generations + self.population_size
 
         try:
-            pop, _ = eaMuPlusLambda(population=pop, toolbox=self._toolbox,
+            pop = eaMuPlusLambda(population=pop, toolbox=self._toolbox,
                 mu=self.population_size, lambda_=self.offspring_size,
                 cxpb=self.cxpb, mutpb=self.mutpb,
-                ngen=self.generations, pbar=self._pbar, halloffame=self._pareto_front,
-                verbose=self.verbosity, max_time_mins=self.max_time_mins)
+                ngen=self.generations, halloffame=self._pareto_front)
 
         except (KeyboardInterrupt, SystemExit):
             print('Keyboard interrupt!. Will use the best pipeline so far')
