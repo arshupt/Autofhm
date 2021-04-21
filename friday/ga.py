@@ -62,17 +62,13 @@ class GeneticAlgo :
         self._setup_pset()
         self._setup_toolbox()
         
-
     def _setup_pset(self): 
         
         if self.random_state is not None:
             random.seed(self.random_state)
             np.random.seed(self.random_state)
-
         self._pset = gp.PrimitiveSetTyped('MAIN', [np.ndarray], Output_Array)
-
         self._pset.renameArguments(ARG0='input_matrix')
-
 
         for op in self.operators:
 
@@ -105,7 +101,6 @@ class GeneticAlgo :
 
         if self.verbosity > 2:
             print('{} operators have been imported by TPOT.'.format(len(self.operators)))
-
 
     def _setup_toolbox(self):
         creator.create('FitnessMulti', base.Fitness, weights=(-1.0, 1.0))
@@ -170,7 +165,6 @@ class GeneticAlgo :
     def _mate_operator(self, ind1, ind2):
         return cxOnePoint(ind1, ind2)
 
-
     def _random_mutation_operator(self, individual):
         mutation_techniques = [
             partial(gp.mutInsert, pset=self._pset),
@@ -179,13 +173,11 @@ class GeneticAlgo :
         ]
         return np.random.choice(mutation_techniques)(individual)
 
-
     def _gen_grow(self, pset, min_, max_, type_=None):
         def condition(height, depth, type_):
             return type_ not in [np.ndarray, Output_Array] or depth == height
 
         return self._generate(pset, min_, max_, condition, type_)
-
 
     def _generate(self, pset, min_, max_, condition, type_=None):
         if type_ is None:
