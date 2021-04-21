@@ -8,7 +8,7 @@ import deap
 import numpy as np
 import copy as copy
 
-
+from utils import pareto_eq
 
 class GeneticAlgo :
 
@@ -125,63 +125,31 @@ class GeneticAlgo :
 
         features = features.astype(np.float64)
 
-        if self.classification:
-            clf = DecisionTreeClassifier(max_depth=5)
-        else:
-            clf = DecisionTreeRegressor(max_depth=5)
-
-        try:
-            clf = clf.fit(features, classes)
-        except:
-            raise ValueError('Error: Input data is not in a valid format. '
-                                'Please confirm that the input data is scikit-learn compatible. '
-                                'For example, the features must be a 2-D array and target labels '
-                                'must be a 1-D array.')
-
         if self.random_state is not None:
             random.seed(self.random_state)
             np.random.seed(self.random_state)
 
         self._start_datetime = datetime.now()
-
         self._toolbox.register('evaluate', self._evaluate_individuals, features=features, classes=classes, sample_weight=sample_weight)
+        pop = self._toolbox.population(n=self.population_size)
 
-        if self._pop:
-            pop = self._pop
-        else:
-            pop = self._toolbox.population(n=self.population_size)
-
-        def pareto_eq(ind1, ind2):
-
-            return np.allclose(ind1.fitness.values, ind2.fitness.values)
-
-        if not self.warm_start or not self._pareto_front:
-            self._pareto_front = tools.ParetoFront(similar=pareto_eq)
+        self._pareto_front = tools.ParetoFront(similar=pareto_eq)
 
         if self.max_time_mins:
             total_evals = self.population_size
         else:
             total_evals = self.offspring_size * self.generations + self.population_size
 
-        self._pbar = tqdm(total=total_evals, unit='pipeline', leave=False,
-                            disable=not (self.verbosity >= 2), desc='Optimization Progress')
-
         try:
-            with warnings.catch_warnings():
-                warnings.simplefilter('ignore')
-                pop, _ = eaMuPlusLambda(population=pop, toolbox=self._toolbox,
-                    mu=self.population_size, lambda_=self.offspring_size,
-                    cxpb=self.cxpb, mutpb=self.mutpb,
-                    ngen=self.generations, pbar=self._pbar, halloffame=self._pareto_front,
-                    verbose=self.verbosity, max_time_mins=self.max_time_mins)
-
-            if self.warm_start:
-                self._pop = pop
+            pop, _ = eaMuPlusLambda(population=pop, toolbox=self._toolbox,
+                mu=self.population_size, lambda_=self.offspring_size,
+                cxpb=self.cxpb, mutpb=self.mutpb,
+                ngen=self.generations, pbar=self._pbar, halloffame=self._pareto_front,
+                verbose=self.verbosity, max_time_mins=self.max_time_mins)
 
         except (KeyboardInterrupt, SystemExit):
-            if self.verbosity > 0:
-                self._pbar.write('')
-                self._pbar.write('TPOT closed prematurely. Will use the current best pipeline.')
+            self._pbar.write('TPOT closed prematurely. Will use the current best pipeline.')
+
         finally:
 
             if self._pareto_front:
@@ -196,24 +164,7 @@ class GeneticAlgo :
                 else:
                     self._fitted_pipeline = self._toolbox.compile(expr=self._optimized_pipeline)
 
-                    with warnings.catch_warnings():
-                        warnings.simplefilter('ignore')
-                        self._fitted_pipeline.fit(features, classes)
-
-                    if self.verbosity in [1, 2]:
-
-                        if self.verbosity >= 2:
-                            print('')
-                        print('Best pipeline: {}'.format(self._optimized_pipeline))
-
-                    elif self.verbosity >= 3 and self._pareto_front:
-                        self._pareto_front_fitted_pipelines = {}
-
-                        for pipeline in self._pareto_front.items:
-                            self._pareto_front_fitted_pipelines[str(pipeline)] = self._toolbox.compile(expr=pipeline)
-                            with warnings.catch_warnings():
-                                warnings.simplefilter('ignore')
-                                self._pareto_front_fitted_pipelines[str(pipeline)].fit(features, classes)
+                    return self._fitted_pipeline
 
 
     def _mate_operator(self, ind1, ind2):

@@ -1,10 +1,13 @@
 import pandas as pd
+import numpy as np
 
 def index_util(df) :
     df = df.reindex()
     df = df.reset_index(inplace=True)
     return df
 
+def pareto_eq(ind1, ind2):
+            return np.allclose(ind1.fitness.values, ind2.fitness.values)
 
 def create_dataframe_from_entity(entity) :
     
