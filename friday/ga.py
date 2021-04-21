@@ -15,9 +15,7 @@ class GeneticAlgo :
     def __init__(self,generations=100, population_size=100, offspring_size=None,
                  mutation_rate=0.9, crossover_rate=0.1,
                  scoring=None, cv=5, n_jobs=1,
-                 max_time_mins=None, max_eval_time_mins=5,
-                 random_state=None, config_dict=None, warm_start=False,
-                 verbosity=0, disable_update_check=False) :
+                 max_time_mins=None, random_state=None, config_dict=None,) :
         self._pareto_front = None
         self._optimized_pipeline = None
         self._fitted_pipeline = None
@@ -79,10 +77,7 @@ class GeneticAlgo :
             for key in sorted(op.import_hash.keys()):
                 module_list = ', '.join(sorted(op.import_hash[key]))
 
-                if key.startswith('tpot.'):
-                    exec('from {} import {}'.format(key[4:], module_list))
-                else:
-                    exec('from {} import {}'.format(key, module_list))
+                exec('from {} import {}'.format(key, module_list))
 
                 for var in op.import_hash[key]:
                     self.operators_context[var] = eval(var)
