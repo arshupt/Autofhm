@@ -32,8 +32,7 @@ class GeneticAlgo :
         self.operators = []
         self.arguments = []
         for key in sorted(self.config_dict.keys()):
-            op_class, arg_types = TPOTOperatorClassFactory(key, self.config_dict[key],
-            BaseClass=Operator, ArgBaseClass=ARGType)
+            op_class, arg_types = findOperatorClass(key, self.config_dict[key])
             if op_class:
                 self.operators.append(op_class)
                 self.arguments += arg_types
