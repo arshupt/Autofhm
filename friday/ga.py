@@ -78,9 +78,7 @@ class GeneticAlgo :
                 module_list = ', '.join(sorted(op.import_hash[key]))
 
                 exec('from {} import {}'.format(key, module_list))
-
-        self._pset.addPrimitive(CombineDFs(), [np.ndarray, np.ndarray], np.ndarray)
-
+                
         for _type in self.arguments:
             for val in type_values:
                 terminal_name = _type.__name__ + "=" + str(val)
