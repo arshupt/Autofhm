@@ -79,16 +79,9 @@ class GeneticAlgo :
 
                 exec('from {} import {}'.format(key, module_list))
 
-                for var in op.import_hash[key]:
-                    self.operators_context[var] = eval(var)
-
         self._pset.addPrimitive(CombineDFs(), [np.ndarray, np.ndarray], np.ndarray)
 
         for _type in self.arguments:
-            type_values = list(_type.values)
-            if 'nthread' not in _type.__name__:
-                type_values += ['DEFAULT']
-
             for val in type_values:
                 terminal_name = _type.__name__ + "=" + str(val)
                 self._pset.addTerminal(val, _type, name=terminal_name)
