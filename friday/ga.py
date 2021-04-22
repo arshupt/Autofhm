@@ -93,9 +93,6 @@ class GeneticAlgo :
                 terminal_name = _type.__name__ + "=" + str(val)
                 self._pset.addTerminal(val, _type, name=terminal_name)
 
-        if self.verbosity > 2:
-            print('{} operators have been imported by TPOT.'.format(len(self.operators)))
-
     def _setup_toolbox(self):
         creator.create('FitnessMulti', base.Fitness, weights=(-1.0, 1.0))
         creator.create('Individual', gp.PrimitiveTree, fitness=creator.FitnessMulti)
