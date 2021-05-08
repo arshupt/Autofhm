@@ -5,6 +5,7 @@ Friday/friday.py
 Friday.egg-info/PKG-INFO
 Friday.egg-info/SOURCES.txt
 Friday.egg-info/dependency_links.txt
+Friday.egg-info/requires.txt
 Friday.egg-info/top_level.txt
 Friday/feature/__init__.py
 Friday/feature/default_types.py
