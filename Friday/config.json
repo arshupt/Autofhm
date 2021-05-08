@@ -1,0 +1,37 @@
+{
+    "feature" : {
+        "entity_set": {
+            "id": "Iris",
+            "target_entity": "iris"
+        },
+        "entities": [
+            {
+                "id": "iris",
+                "entitySet": "Iris",
+                "target_column": "species",
+                "variable_types": {
+                    "sepal_length": "numerical",
+                    "sepal_width": "numerical",
+                    "petal_length": "numerical",
+                    "petal_width": "numerical"
+                    },
+                "index": "Index",
+                "dataframe_path": "/home/rrk/AutoML-1/Friday/Dataset/iris.csv"
+            }
+        ],
+        "relationship": [
+        ],
+        "primitives": {
+        },
+        "datapath" : [
+            "friday/config.json"
+        ]
+    },
+    "model" : {
+
+    },
+    "training_mode" : {
+        "mode": "classification"
+
+    }
+}
