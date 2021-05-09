@@ -31,7 +31,7 @@ class GeneticAlgo :
     def __init__(self,generations=10, population_size=50, offspring_size=None,
                  mutation_rate=0.8, crossover_rate=0.2,
                  cv=5, n_jobs=-1,random_state=None, 
-                 config_dict=None, classification=True, scoring_function="accuracy") :
+                 config_dict=None, classification=True, scoring_function=None) :
         
         self._pareto_front = None
         self._optimized_pipeline = None
@@ -41,15 +41,22 @@ class GeneticAlgo :
         self.population_size = population_size
         self.generations = generations
         self.offspring_size = population_size
-        self.classification = classification    
+        self.classification = classification   
         if config_dict is None: 
             self.config_dict = config_classifier if self.classification else config_regressor
         else :
             self.config_dict = config_dict
+
         self.mutpb = mutation_rate
         self.cxpb = crossover_rate
         self.random_state = random_state
-        self.scoring_function = scoring_function
+        if scoring_function is not None :
+            self.scoring_function = scoring_function
+        else :
+            if self.classification :
+                self.scoring_function = 'accuracy'
+            else :
+                self.scoring_function = 'explained_variance'
         self.cv = cv
         if n_jobs == -1:
             self.n_jobs = cpu_count()
@@ -125,6 +132,7 @@ class GeneticAlgo :
             np.random.seed(self.random_state)
 
         self._toolbox.register('evaluate', self._evaluate_individuals, features=features, classes=classes)
+
         pop = self._toolbox.population(n=self.population_size)
 
         self._pareto_front = tools.ParetoFront(similar=pareto_eq)

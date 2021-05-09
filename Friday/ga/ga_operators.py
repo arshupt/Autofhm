@@ -127,10 +127,8 @@ def varAnd(population, toolbox, lambda_, cxpb, mutpb):
     return random.sample(offspring, lambda_) 
 
 def eaMuPlusLambda(population, toolbox, mu, lambda_, cxpb, mutpb, ngen, halloffame=None):
-
     invalid_ind = [ind for ind in population if not ind.fitness.valid]
     fitnesses = toolbox.evaluate(invalid_ind)
-
     for ind, fit in zip(invalid_ind, fitnesses):
         ind.fitness.values = fit
 

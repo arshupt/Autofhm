@@ -6,8 +6,8 @@ import pickle
 import pandas as pd
 import numpy as np
 from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
 
+from Friday.utils.metrics import metrics
 from Friday.utils.parse_util import parse_json, parse_xml, parse_yaml
 from Friday.utils.utils import cv_score
 from Friday.feature.features import Features
@@ -31,7 +31,8 @@ class Friday :
         self.feature_config, self.model_config, self.training_config = self._handle_config()  
         self.cv = 5 if 'cv' not in self.training_config else self.training_config['cv']
         self.n_jobs = -1 if 'n_jobs' not in self.training_config else self.training_config['n_jobs']
-        self.scoring_function = 'accuracy' if 'scoring_function' not in self.training_config else self.training_config['scoring_function']
+        self.scoring_function = None if 'scoring_function' not in self.training_config else self.training_config['scoring_function']
+        self.classification = True if self.training_config['mode']=='classification' else False
 
     def _handle_config(self) :
 
@@ -124,9 +125,8 @@ class Friday :
         offspring =population if 'offspring' not in training_config else training_config['offspring']
         mutation_rate = 0.8 if 'mutation_rate' not in training_config else training_config['mutation_rate']
         crossover_rate = 0.2 if 'crossover_rate' not in training_config else training_config['crossover_rate']
-        classification = training_config['mode']=='classification'
 
-        if classification :
+        if self.classification :
             model = DecisionTreeClassifier(max_depth=5)
         else :
             model = DecisionTreeRegressor(max_depth=5)
@@ -146,7 +146,7 @@ class Friday :
             n_jobs=self.n_jobs,
             random_state=self.random_state,
             config_dict=config_dict,
-            classification=classification,
+            classification=self.classification,
             scoring_function=self.scoring_function
             )
 
@@ -178,14 +178,21 @@ class Friday :
 
     def test(self, X_test=None, y_test=None):
 
+        if self.scoring_function is None :
+            if self.classification :
+                scorer = metrics['accuracy']
+            else :
+                scorer = metrics['explained_variance']
+        else :
+            scorer = metrics[self.scoring_function]
+
         if X_test is not None and y_test is not None :
             self.X_test = X_test
             self.y_test = y_test
         elif self.X_test is None and self.y_test is None :
             raise ValueError('No data is provided')
-        output = self.predict(self.X_test)
-        score = accuracy_score(self.y_test, output)
-
+        y_pred = self.predict(self.X_test)
+        score = scorer(self.y_test, y_pred)
         return score
 
     def save_model(self, filename, path) :

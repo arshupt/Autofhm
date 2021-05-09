@@ -3,7 +3,8 @@ import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin, TransformerMixin
 import inspect
 from deap import tools, gp
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import KFold
+from .metrics import metrics
 import warnings
 import threading
 
@@ -200,22 +201,35 @@ def _process_operator(operator, operators, depth=0):
 
 
 @threading_timeoutable(default="Timeout")
-def cv_score(model, features, target, cv, scoring_function='accuracy'):
+def cv_score(model, features, targets, cv, scoring_function):
+    folds = KFold(n_splits=cv)
     try:
         with warnings.catch_warnings():
             warnings.filterwarnings('ignore')
-            scores = cross_val_score(model, features, target, cv=cv, scoring=scoring_function)
 
-        CV_score = np.array(scores)
-        print(CV_score)
-        nz = np.count_nonzero(np.isnan(CV_score))
-        if len(CV_score) - nz == 0 :
+            cv_score = []
+            features = features.to_numpy()
+            targets = targets.to_numpy()
+
+            for train_idx, test_idx in folds.split(features):
+
+                X_train, X_test, y_train, y_test =features[train_idx],features[test_idx], targets[train_idx], targets[test_idx]
+                model.fit(X_train, y_train)
+                y_pred = model.predict(X_test)
+                scorer = metrics[scoring_function]
+                cv_score.append(scorer(y_test, y_pred))
+
+        cv_score = np.array(cv_score)
+        print(cv_score)
+        nz = np.count_nonzero(np.isnan(cv_score))
+        if len(cv_score) - nz == 0 :
             return -float('inf')
         else :
-            return np.nanmean(CV_score)
+            return np.nanmean(cv_score)
     except TimeoutException:
         return "Timeout"
     except Exception as e:
+        print(e)
         return -float('inf')
 
 

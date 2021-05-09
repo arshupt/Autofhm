@@ -1,0 +1,40 @@
+{
+    "feature" : {
+        "entity_set": {
+            "id": "admission_predict",
+            "target_entity": "admission"
+        },
+        "entities": [
+            {
+                "id": "admission",
+                "entitySet": "admission_predict",
+                "target_column": "Chance of Admit",
+                "variable_types": {
+                    "GRE Score": "numerical",
+                    "TOEFL Score": "numerical",
+                    "University Rating": "numerical",
+                    "LOR": "numerical",
+                    "CGPA": "numerical",
+                    "Research": "numerical",
+                    "SOP": "numerical"
+                    },
+                "index": "Serial No",
+                "dataframe_path": "/home/rrk/AutoML-1/Dataset/admission_predict/Admission_Predict.csv"
+            }
+        ],
+        "relationship": [
+        ],
+        "primitives": {
+        },
+        "datapath" : [
+            "friday/config.json"
+        ]
+    },
+    "model" : {
+
+    },
+    "training_mode" : {
+        "mode": "regression"
+
+    }
+}
