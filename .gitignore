@@ -6,6 +6,7 @@ __pycache__/
 Fridady/__pycache__/
 Fridady/feature/__pycache__/
 Fridady/ga/__pycache__/
+Friday/utils/__pycache__/
 *.py[cod]
 *$py.class
 **/.DS_Store
@@ -56,4 +57,3 @@ ENV/
 *.sav
 
 .pytest_cache
-
