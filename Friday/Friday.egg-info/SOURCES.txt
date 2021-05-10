@@ -1,0 +1,7 @@
+README.md
+setup.py
+Friday/friday.py
+Friday/Friday.egg-info/PKG-INFO
+Friday/Friday.egg-info/SOURCES.txt
+Friday/Friday.egg-info/dependency_links.txt
+Friday/Friday.egg-info/top_level.txt

@@ -1,0 +1,46 @@
+{
+    "feature" : {
+        "entity_set": {
+            "id": "Boston",
+            "target_entity": "boston"
+        },
+        "entities": [
+            {
+                "id": "boston",
+                "entitySet": "Boston",
+                "target_column": "medv",
+                "variable_types": {
+                    "crim": "numerical",
+                    "zn": "numerical",
+                    "indus": "numerical",
+                    "chas": "numerical",
+                    "nox": "numerical",
+                    "rm": "numerical",
+                    "age": "numerical",
+                    "dis": "numerical",
+                    "rad": "numerical",
+                    "tax": "numerical",
+                    "ptratio": "numerical",
+                    "black": "numerical",
+                    "lstat": "numerical"
+                },
+                "index": "Index",
+                "dataframe_path": "/home/rrk/AutoML-1/Dataset/Boston/Boston.csv"
+            }
+        ],
+        "relationship": [
+        ],
+        "primitives": {
+        },
+        "datapath" : [
+            "friday/config.json"
+        ]
+    },
+    "model" : {
+
+    },
+    "training_mode" : {
+        "mode": "regression"
+
+    }
+}
