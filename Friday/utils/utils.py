@@ -219,7 +219,6 @@ def cv_score(model, features, targets, cv, scoring_function):
                 cv_score.append(scorer(y_test, y_pred))
 
         cv_score = np.array(cv_score)
-        print(cv_score)
         nz = np.count_nonzero(np.isnan(cv_score))
         if len(cv_score) - nz == 0 :
             return -float('inf')
@@ -228,8 +227,6 @@ def cv_score(model, features, targets, cv, scoring_function):
     except TimeoutException:
         return "Timeout"
     except Exception as e:
-        print(e)
-        exit()
         return -float('inf')
 
 
