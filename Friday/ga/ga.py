@@ -28,7 +28,7 @@ from Friday.utils.utils import cv_score, Output_Array, pareto_eq, findOperatorCl
 
 class GeneticAlgo :
 
-    def __init__(self,generations=10, population_size=50, offspring_size=None,
+    def __init__(self,generations=20, population_size=50, offspring_size=None,
                  mutation_rate=0.8, crossover_rate=0.2,
                  cv=5, n_jobs=-1,random_state=None, 
                  config_dict=None, classification=True, scoring_function=None) :
@@ -208,8 +208,7 @@ class GeneticAlgo :
         return expr
 
     def _evaluate_individuals(self, individuals, features, classes, sample_weight = None):
-
-
+        
         fitnesses_dict = {}
         eval_individuals_str = []
         sklearn_pipeline_list = []
@@ -245,8 +244,8 @@ class GeneticAlgo :
         for chunk_idx in range(0, len(sklearn_pipeline_list),self.n_jobs*4):
             parallel = Parallel(n_jobs=self.n_jobs, verbose=0, pre_dispatch='2*n_jobs')
             tmp_result_score = parallel(delayed(cv_score)(sklearn_pipeline, features, classes,
-                                         self.cv, self.scoring_function)
-                      for sklearn_pipeline in sklearn_pipeline_list[chunk_idx:chunk_idx+self.n_jobs*4])
+                                        self.cv, self.scoring_function)
+                                        for sklearn_pipeline in sklearn_pipeline_list[chunk_idx:chunk_idx+self.n_jobs*4])
             for val in tmp_result_score:
                 if val == 'Timeout':
                     resulting_score_list.append(-float('inf'))

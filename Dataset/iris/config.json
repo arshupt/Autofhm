@@ -16,7 +16,7 @@
                     "petal_width": "numerical"
                     },
                 "index": "Index",
-                "dataframe_path": "/home/rrk/AutoML-1/Friday/Dataset/iris.csv"
+                "dataframe_path": "/home/rrk/AutoML-1/Dataset/iris/iris.csv"
             }
         ],
         "relationship": [
