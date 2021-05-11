@@ -43,7 +43,11 @@ def parse_json(path):
     except json.decoder.JSONDecodeError as JSONDecodeError:
         err = JSONDecodeError
     except Exception as e:
+<<<<<<< HEAD:Friday/utils/parse_util.py
         err = "Exception" + e.args
+=======
+        err = "Random error" + e.args
+>>>>>>> origin/master:Friday/parse_util.py
 
     return entitySetDetails, err
 
@@ -61,5 +65,9 @@ def parse_yaml(path):
     except YAMLError:
         err = YAMLError
     except Exception as e:
+<<<<<<< HEAD:Friday/utils/parse_util.py
         err = "Exception" + e.args
+=======
+        err = "Random error" + e.args
+>>>>>>> origin/master:Friday/parse_util.py
     return entitySetDetails, err

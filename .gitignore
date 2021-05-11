@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #
 /home/rrk/AutoML-1/Friday/config.json
 
@@ -56,3 +57,8 @@ ENV/
 
 #IDE
 .vscode
+=======
+/Friday/__pycache__
+/.venv
+/.vscode/settings.json
+>>>>>>> origin/master

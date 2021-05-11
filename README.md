@@ -1,5 +1,12 @@
 # AutoML
 
+# Running
+
+Run the following commands in project root
+
+1. Run `python3 -m venv .venv`  - This is only done once. Try restaring the editor the VSCODE shows local virtual enviroment.
+2. Run `pip install -r requirements.txt` (After activating the virtual enviroment)
+3. 
 ## Structure of Project
 
 - `friday/` - source code area
