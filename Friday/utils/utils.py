@@ -1,15 +1,18 @@
-import pandas as pd
-import numpy as np
-from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin, TransformerMixin
 import inspect
-from deap import tools, gp
-from sklearn.model_selection import KFold
-from .metrics import metrics
 import warnings
 import threading
-
 from collections import defaultdict
 from stopit import threading_timeoutable, TimeoutException
+
+import deap
+from deap import tools, gp
+import pandas as pd
+import numpy as np
+
+from sklearn.model_selection import KFold
+from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin, TransformerMixin
+
+from .metrics import metrics
 
 def pareto_eq(ind1, ind2):
             return np.allclose(ind1.fitness.values, ind2.fitness.values)
@@ -56,7 +59,6 @@ def source_decode(sourcecode):
 
 
 def findArgTypes(classname, prange, BaseClass=ARGType):
-
     return type(classname, (BaseClass,), {'values': prange})
 
 
@@ -136,8 +138,6 @@ def findOperatorClass(opsourse, opdict, BaseClass=Operator, ArgBaseClass=ARGType
         op_class.__name__ = op_str
         return op_class, arg_types
 
-import deap
-
 
 def get_by_name(opname, operators):
     
@@ -201,12 +201,11 @@ def _process_operator(operator, operators, depth=0):
 
 
 @threading_timeoutable(default="Timeout")
-def cv_score(model, features, targets, cv, scoring_function):
-    folds = KFold(n_splits=cv)
+def cv_score(model, features, targets, cv, scoring_function, random_state):
+    folds = KFold(n_splits=cv, shuffle=True, random_state=random_state)
     try:
         with warnings.catch_warnings():
             warnings.filterwarnings('ignore')
-
             cv_score = []
             features = features.to_numpy()
             targets = targets.to_numpy()
@@ -229,7 +228,6 @@ def cv_score(model, features, targets, cv, scoring_function):
     except TimeoutException:
         return "Timeout"
     except Exception as e:
-        print(e)
         return -float('inf')
 
 

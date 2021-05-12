@@ -20,7 +20,7 @@ class Features(object):
         entities,
         relationships=None,
         primitives=None,
-        corr_threshold=0.85,
+        corr_threshold=0.8,
         scale=None,
         transform=None,
         n_jobs=-1,

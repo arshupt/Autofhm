@@ -1,4 +1,3 @@
-import os
 import warnings
 import random
 import pickle
@@ -107,8 +106,10 @@ class Friday :
             random_state=self.random_state,
 
         )
+        with warnings.catch_warnings() :
+            warnings.filterwarnings('ignore')
 
-        self.X_train, self.X_test, self.y_train, self.y_test = self.feature.build()
+            self.X_train, self.X_test, self.y_train, self.y_test = self.feature.build()
 
     def get_test_data(self, n=10) :
 
@@ -148,7 +149,7 @@ class Friday :
             config_dict=config_dict,
             classification=self.classification,
             scoring_function=self.scoring_function
-            )
+        )
 
         return ga.optimise(self.X_train, self.y_train)
 

@@ -43,7 +43,7 @@ def parse_json(path):
     except json.decoder.JSONDecodeError as JSONDecodeError:
         err = JSONDecodeError
     except Exception as e:
-        err = "Exception" + e.args
+       err = "Exception" + e.args
 
     return entitySetDetails, err
 
@@ -61,5 +61,5 @@ def parse_yaml(path):
     except YAMLError:
         err = YAMLError
     except Exception as e:
-        err = "Exception" + e.args
+       err = "Exception" + e.args
     return entitySetDetails, err

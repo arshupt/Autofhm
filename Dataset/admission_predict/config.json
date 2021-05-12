@@ -35,6 +35,5 @@
     },
     "training_mode" : {
         "mode": "regression"
-
     }
 }

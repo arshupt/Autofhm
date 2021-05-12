@@ -1,0 +1,93 @@
+{
+    "feature" : {
+        "entity_set": {
+            "id": "Sonar",
+            "target_entity": "sonar"
+        },
+        "entities": [
+            {
+                "id": "sonar",
+                "entitySet": "Sonar",
+                "target_column": "Class",
+                "variable_types": {
+                    "attribute_1": "numerical",
+                    "attribute_2": "numerical",
+                    "attribute_3": "numerical",
+                    "attribute_4": "numerical",
+                    "attribute_5": "numerical",
+                    "attribute_6": "numerical",
+                    "attribute_7": "numerical",
+                    "attribute_8": "numerical",
+                    "attribute_9": "numerical",
+                    "attribute_10": "numerical",
+                    "attribute_11": "numerical",
+                    "attribute_12": "numerical",
+                    "attribute_13": "numerical",
+                    "attribute_14": "numerical",
+                    "attribute_15": "numerical",
+                    "attribute_16": "numerical",
+                    "attribute_17": "numerical",
+                    "attribute_18": "numerical",
+                    "attribute_19": "numerical",
+                    "attribute_20": "numerical",
+                    "attribute_21": "numerical",
+                    "attribute_22": "numerical",
+                    "attribute_23": "numerical",
+                    "attribute_24": "numerical",
+                    "attribute_25": "numerical",
+                    "attribute_26": "numerical",
+                    "attribute_27": "numerical",
+                    "attribute_28": "numerical",
+                    "attribute_29": "numerical",
+                    "attribute_30": "numerical",
+                    "attribute_31": "numerical",
+                    "attribute_32": "numerical",
+                    "attribute_33": "numerical",
+                    "attribute_34": "numerical",
+                    "attribute_35": "numerical",
+                    "attribute_36": "numerical",
+                    "attribute_37": "numerical",
+                    "attribute_38": "numerical",
+                    "attribute_39": "numerical",
+                    "attribute_40": "numerical",
+                    "attribute_41": "numerical",
+                    "attribute_42": "numerical",
+                    "attribute_43": "numerical",
+                    "attribute_44": "numerical",
+                    "attribute_45": "numerical",
+                    "attribute_46": "numerical",
+                    "attribute_47": "numerical",
+                    "attribute_48": "numerical",
+                    "attribute_49": "numerical",
+                    "attribute_50": "numerical",
+                    "attribute_51": "numerical",
+                    "attribute_52": "numerical",
+                    "attribute_53": "numerical",
+                    "attribute_54": "numerical",
+                    "attribute_55": "numerical",
+                    "attribute_56": "numerical",
+                    "attribute_57": "numerical",
+                    "attribute_58": "numerical",
+                    "attribute_59": "numerical",
+                    "attribute_60": "numerical"
+                },
+                "index": "index",
+                "dataframe_path": "/home/rrk/AutoML-1/Dataset/Sonar/sonar_csv.csv"
+            }
+        ],
+        "relationship": [
+        ],
+        "primitives": {
+        },
+        "datapath" : [
+            "friday/config.json"
+        ]
+    },
+    "model" : {
+
+    },
+    "training_mode" : {
+        "mode": "classification",
+        "scoring_function": "precision"
+    }
+}
