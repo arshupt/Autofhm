@@ -201,8 +201,8 @@ def _process_operator(operator, operators, depth=0):
 
 
 @threading_timeoutable(default="Timeout")
-def cv_score(model, features, targets, cv, scoring_function):
-    folds = KFold(n_splits=cv)
+def cv_score(model, features, targets, cv, scoring_function, random_state):
+    folds = KFold(n_splits=cv, shuffle=True, random_state=random_state)
     try:
         with warnings.catch_warnings():
             warnings.filterwarnings('ignore')
@@ -219,6 +219,7 @@ def cv_score(model, features, targets, cv, scoring_function):
                 cv_score.append(scorer(y_test, y_pred))
 
         cv_score = np.array(cv_score)
+        print(cv_score)
         nz = np.count_nonzero(np.isnan(cv_score))
         if len(cv_score) - nz == 0 :
             return -float('inf')

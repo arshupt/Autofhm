@@ -4,21 +4,13 @@ from functools import partial
 from inspect import isclass
 from multiprocessing import cpu_count
 
-from sklearn.base import BaseEstimator
-from sklearn.utils import check_X_y
-from sklearn.pipeline import make_pipeline, make_union
-from sklearn.preprocessing import FunctionTransformer
-from sklearn.model_selection import train_test_split
 from joblib import Parallel, delayed
-from sklearn.ensemble import VotingClassifier
-from sklearn.datasets import load_iris
-
 
 import deap
 import numpy as np
 import pandas as pd
 from deap import gp, tools, creator, base
-from copy import copy, deepcopy
+from copy import copy
 
 
 from .config_model import config_classifier, config_regressor
@@ -244,7 +236,7 @@ class GeneticAlgo :
         for chunk_idx in range(0, len(sklearn_pipeline_list),self.n_jobs*4):
             parallel = Parallel(n_jobs=self.n_jobs, verbose=0, pre_dispatch='2*n_jobs')
             tmp_result_score = parallel(delayed(cv_score)(sklearn_pipeline, features, classes,
-                                        self.cv, self.scoring_function)
+                                        self.cv, self.scoring_function, self.random_state)
                                         for sklearn_pipeline in sklearn_pipeline_list[chunk_idx:chunk_idx+self.n_jobs*4])
             for val in tmp_result_score:
                 if val == 'Timeout':
