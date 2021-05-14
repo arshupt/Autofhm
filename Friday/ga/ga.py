@@ -14,7 +14,7 @@ from copy import copy
 
 
 from .config_model import config_classifier, config_regressor
-from .ga_operators import cxOnePoint, mutNodeReplacement, eaMuPlusLambda
+from .ga_operators import cxOnePoint, mutIndividual, eaMuPlusLambda
 from Friday.utils.utils import cv_score, Output_Array, pareto_eq, findOperatorClass, expr_to_tree, generate_pipeline_code
 
 
@@ -32,7 +32,7 @@ class GeneticAlgo :
 
         self.population_size = population_size
         self.generations = generations
-        self.offspring_size = population_size
+        self.offspring_size = population_size if offspring_size is None else offspring_size
         self.classification = classification   
         if config_dict is None: 
             self.config_dict = config_classifier if self.classification else config_regressor
@@ -97,6 +97,7 @@ class GeneticAlgo :
 
                
         for _type in self.arguments:
+
             for val in list(_type.values):
                 terminal_name = _type.__name__ + "=" + str(val)
                 self._pset.addTerminal(val, _type, name=terminal_name)
@@ -163,40 +164,29 @@ class GeneticAlgo :
         return cxOnePoint(ind1, ind2)
 
     def _random_mutation_operator(self, individual):
-        mutation_technique = partial(mutNodeReplacement, pset=self._pset)
+        mutation_technique = partial(mutIndividual, pset=self._pset)
         return mutation_technique(individual)
 
     def _gen_grow(self, pset, min_, max_, type_=None):
-        def condition(height, depth, type_):
-            return type_ not in [np.ndarray, Output_Array] or depth == height
+        return self._generate(pset, type_)
 
-        return self._generate(pset, min_, max_, condition, type_)
-
-    def _generate(self, pset, min_, max_, condition, type_=None):
+    def _generate(self, pset, type_=None):
         if type_ is None:
             type_ = pset.ret
         expr = []
-        height = 1
-        depth = 0
         try:
             prim = np.random.choice(pset.primitives[type_])
         except IndexError:
             raise IndexError("Some error occured while adding primitives") 
         expr.append(prim)
-        stack = []
-        for arg in reversed(prim.args):
-            stack.append((depth+1, arg))
-        while len(stack) != 0:
-            depth, type_ = stack.pop()
-            if condition(height, depth, type_):
-                try:
-                    term = np.random.choice(pset.terminals[type_])
-                except IndexError:
-                    raise IndexError("Some error occured while adding terminal primitives")
-                if isclass(term):
-                    term = term()
-                expr.append(term)
-
+        for arg in prim.args:
+            try:
+                term = np.random.choice(pset.terminals[arg])
+            except IndexError:
+                raise IndexError("Some error occured while adding terminal primitives")
+            if isclass(term):
+                term = term()
+            expr.append(term)
         return expr
 
     def _evaluate_individuals(self, individuals, features, classes, sample_weight = None):
@@ -224,8 +214,6 @@ class GeneticAlgo :
                         operator_count += 1
                 except Exception:
                     fitnesses_dict[indidx] = (5000., -float('inf'))
-                    if not self._pbar.disable:
-                        self._pbar.update(1)
                     continue
                 eval_individuals_str.append(individual_str)
                 operator_count_list.append(operator_count)
