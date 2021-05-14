@@ -1,6 +1,8 @@
+import os
 import warnings
 import random
 import pickle
+
 
 import pandas as pd
 import numpy as np
@@ -181,11 +183,11 @@ class Friday :
 
         if self.scoring_function is None :
             if self.classification :
-                scorer = metrics['accuracy']
+                scorer, _ = metrics['accuracy']
             else :
-                scorer = metrics['explained_variance']
+                scorer, _ = metrics['explained_variance']
         else :
-            scorer = metrics[self.scoring_function]
+            scorer, _ = metrics[self.scoring_function]
 
         if X_test is not None and y_test is not None :
             self.X_test = X_test

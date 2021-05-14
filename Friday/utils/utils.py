@@ -1,16 +1,13 @@
 import inspect
 import warnings
-import threading
-from collections import defaultdict
 from stopit import threading_timeoutable, TimeoutException
 
 import deap
-from deap import tools, gp
 import pandas as pd
 import numpy as np
 
 from sklearn.model_selection import KFold
-from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin, TransformerMixin
+from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 
 from .metrics import metrics
 
@@ -206,16 +203,15 @@ def cv_score(model, features, targets, cv, scoring_function, random_state):
     try:
         with warnings.catch_warnings():
             warnings.filterwarnings('ignore')
-            cv_score = []
             features = features.to_numpy()
             targets = targets.to_numpy()
-
+            scorer, lowerIsBetter = metrics[scoring_function]
+            cv_score = []
             for train_idx, test_idx in folds.split(features):
 
                 X_train, X_test, y_train, y_test =features[train_idx],features[test_idx], targets[train_idx], targets[test_idx]
                 model.fit(X_train, y_train)
                 y_pred = model.predict(X_test)
-                scorer = metrics[scoring_function]
                 cv_score.append(scorer(y_test, y_pred))
 
         cv_score = np.array(cv_score)
@@ -224,7 +220,10 @@ def cv_score(model, features, targets, cv, scoring_function, random_state):
         if len(cv_score) - nz == 0 :
             return -float('inf')
         else :
-            return np.nanmean(cv_score)
+            if lowerIsBetter :
+                return np.nanmean(np.negative(cv_score))
+            else :
+                return np.nanmean(cv_score)
     except TimeoutException:
         return "Timeout"
     except Exception as e:
