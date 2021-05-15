@@ -1,0 +1,40 @@
+{
+    "feature" : {
+        "entity_set": {
+            "id": "Fish",
+            "target_entity": "fish"
+        },
+        "entities": [
+            {
+                "id": "fish",
+                "entitySet": "Fish",
+                "target_column": "Species",
+                "variable_types": {
+                    "Weight": "numerical",
+                    "Length1": "numerical",
+                    "Length2": "numerical",
+                    "Length3": "numerical",
+                    "Height": "numerical",
+                    "Width": "numerical"
+                    },
+                "index": "Index",
+                "dataframe_path": "/home/arshu/Documents/ProjectRepo/AutoML/Dataset/fish/fish.csv"
+            }
+        ],
+        "relationship": [
+        ],
+        "primitives": {
+        },
+        "datapath" : [
+            "friday/config.json"
+        ]
+    },
+    "model" : {
+
+    },
+    "training_mode" : {
+        "mode": "classification",
+        "scoring_function": "accuracy"
+
+    }
+}

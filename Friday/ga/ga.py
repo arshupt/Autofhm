@@ -20,7 +20,7 @@ from Friday.utils.utils import cv_score, Output_Array, pareto_eq, findOperatorCl
 
 class GeneticAlgo :
 
-    def __init__(self,generations=20, population_size=50, offspring_size=None,
+    def __init__(self,generations=20, population_size=100, offspring_size=None,
                  mutation_rate=0.8, crossover_rate=0.2,
                  cv=5, n_jobs=-1,random_state=None, 
                  config_dict=None, classification=True, scoring_function=None) :

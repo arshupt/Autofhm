@@ -1,0 +1,40 @@
+{
+    "feature" : {
+        "entity_set": {
+            "id": "Insurance",
+            "target_entity": "insurance"
+        },
+        "entities": [
+            {
+                "id": "insurance",
+                "entitySet": "Insurance",
+                "target_column": "charges",
+                "variable_types": {
+                    "age": "numerical",
+                    "sex": "categorical",
+                    "bmi": "numerical",
+                    "children": "numerical",
+                    "smoker": "categorical",
+                    "region": "categorical"
+                },
+                "index": "Index",
+                "dataframe_path": "/home/arshu/Documents/ProjectRepo/AutoML/Dataset/insurance/insurance.csv"
+            }
+        ],
+        "relationship": [
+        ],
+        "primitives": {
+        },
+        "datapath" : [
+            "friday/config.json"
+        ]
+    },
+    "model" : {
+
+    },
+    "training_mode" : {
+        "mode": "regression",
+        "scoring_function": "mean_squared_error"
+
+    }
+}

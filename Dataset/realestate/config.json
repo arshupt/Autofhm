@@ -1,0 +1,40 @@
+{
+    "feature" : {
+        "entity_set": {
+            "id": "Realestate",
+            "target_entity": "realestate"
+        },
+        "entities": [
+            {
+                "id": "realestate",
+                "entitySet": "Realestate",
+                "target_column": "Y house price of unit area",
+                "variable_types": {
+                    "X1 transaction date": "numerical",
+                    "X2 house age": "numerical",
+                    "X3 distance to the nearest MRT station": "numerical",
+                    "X4 number of convenience stores": "numerical",
+                    "X5 latitude": "numerical",
+                    "X6 longitude": "numerical"
+                },
+                "index": "Index",
+                "dataframe_path": "/home/arshu/Documents/ProjectRepo/AutoML/Dataset/realestate/realestate.csv"
+            }
+        ],
+        "relationship": [
+        ],
+        "primitives": {
+        },
+        "datapath" : [
+            "friday/config.json"
+        ]
+    },
+    "model" : {
+
+    },
+    "training_mode" : {
+        "mode": "regression",
+        "scoring_function":"mean_squared_error"
+
+    }
+}
