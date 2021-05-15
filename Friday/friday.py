@@ -124,7 +124,7 @@ class Friday :
         training_config = self.training_config
 
         gen = 20 if 'gen' not in training_config else training_config['gen']
-        population = 50 if 'population' not in training_config else training_config['population']
+        population = 10 if 'population' not in training_config else training_config['population']
         offspring =population if 'offspring' not in training_config else training_config['offspring']
         mutation_rate = 0.8 if 'mutation_rate' not in training_config else training_config['mutation_rate']
         crossover_rate = 0.2 if 'crossover_rate' not in training_config else training_config['crossover_rate']
@@ -187,7 +187,7 @@ class Friday :
             else :
                 scorer, _ = metrics['explained_variance']
         else :
-            scorer, _ = metrics[self.scoring_function]
+            scorer, _ = metrics['mean_absolute_error']
 
         if X_test is not None and y_test is not None :
             self.X_test = X_test

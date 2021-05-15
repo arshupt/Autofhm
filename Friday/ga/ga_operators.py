@@ -7,6 +7,8 @@ from sklearn.base import clone
 from collections import defaultdict
 
 def mutIndividual(ind, pset):
+
+    if(len(ind)<=2) : return ind
     index = np.random.randint(2, len(ind))
     node = ind[index]
     node_str = node.name
@@ -19,6 +21,7 @@ def mutIndividual(ind, pset):
     return ind
 
 def cxOnePoint(ind1, ind2):
+    
     if str(ind1) == str(ind2) : return ind1, ind2
     indexList = []
     for i, node in enumerate(zip(ind1[1:], ind2[1:]), 1) :
@@ -48,46 +51,43 @@ def selectIndividual(population) :
 def varAnd(population, toolbox, lambda_, cxpb, mutpb):
     
     offspring = []
-
+    
     for _ in range(lambda_):
         op_choice = np.random.random()
-
         if op_choice < cxpb:
             ind1, ind2 = selectIndividual(population)
             ind_str = str(ind1)
             num_loop = 0
-
             while ind_str == str(ind1) and num_loop < 50 : 
                 ind1, ind2 = toolbox.mate(ind1, ind2)
                 num_loop += 1
-
+        
             if ind_str != str(ind1): 
                 del ind1.fitness.values
             offspring.append(ind1) 
-
         op_choice = np.random.random()
 
         if op_choice < mutpb:  
-            idx = np.random.randint(0, len(population))
-            ind = toolbox.clone(population[idx])
-            ind_str = str(ind)
-            num_loop = 0
+                idx = np.random.randint(0, len(population))
+                ind = toolbox.clone(population[idx])
+                ind_str = str(ind)
+                num_loop = 0
 
-            while ind_str == str(ind) and num_loop < 50 :
-                ind = toolbox.mutate(ind)
-                num_loop += 1
+                while ind_str == str(ind) and num_loop < 50 :
+                    ind = toolbox.mutate(ind)
+                    num_loop += 1
 
-            if ind_str != str(ind): 
-                del ind.fitness.values
-            offspring.append(ind)
+                if ind_str != str(ind): 
+                    del ind.fitness.values
+                offspring.append(ind)
         else: 
             idx = np.random.randint(0, len(population))
             offspring.append(toolbox.clone(population[idx]))
-
-    return random.sample(offspring, lambda_) 
+    offspring = random.sample(offspring, lambda_)
+    return offspring
 
 def eaMuPlusLambda(population, toolbox, mu, lambda_, cxpb, mutpb, ngen, halloffame=None):
-    
+
     invalid_ind = [ind for ind in population if not ind.fitness.valid]
     fitnesses = toolbox.evaluate(invalid_ind)
     for ind, fit in zip(invalid_ind, fitnesses):
@@ -97,8 +97,8 @@ def eaMuPlusLambda(population, toolbox, mu, lambda_, cxpb, mutpb, ngen, halloffa
         halloffame.update(population)
 
     for gen in range(1, ngen + 1):
+        
         offspring = varAnd(population, toolbox, lambda_, cxpb, mutpb)
-
         invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
         # print(invalid_ind)
         fitnesses = toolbox.evaluate(invalid_ind)
