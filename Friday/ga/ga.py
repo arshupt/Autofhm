@@ -111,7 +111,7 @@ class GeneticAlgo :
         self._toolbox.register('individual', tools.initIterate, creator.Individual, self._toolbox.expr)
         self._toolbox.register('population', tools.initRepeat, list, self._toolbox.individual)
         self._toolbox.register('compile', self._compile_to_sklearn)
-        self._toolbox.register('select', tools.selNSGA2)
+        self._toolbox.register('select', tools.selBest)
         self._toolbox.register('mate', self._mate_operator)
         self._toolbox.register('expr_mut', self._gen_grow, min_=1, max_=1)
         self._toolbox.register('mutate', self._random_mutation_operator)
@@ -129,9 +129,6 @@ class GeneticAlgo :
         pop = self._toolbox.population(n=self.population_size)
 
         self._pareto_front = tools.ParetoFront(similar=pareto_eq)
-
-    
-        total_evals = self.offspring_size * self.generations + self.population_size
 
         try:
             pop = eaMuPlusLambda(population=pop, toolbox=self._toolbox,

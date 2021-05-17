@@ -7,8 +7,7 @@ import pickle
 import pandas as pd
 import numpy as np
 from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
-
-from Friday.utils.metrics import metrics
+from Friday.utils.metrics import r_metrics, c_metrics
 from Friday.utils.parse_util import parse_json, parse_xml, parse_yaml
 from Friday.utils.utils import cv_score
 from Friday.feature.features import Features
@@ -102,7 +101,7 @@ class Friday :
             relationships=relationships,
             corr_threshold=corr_threshold,
             scale=scale,
-            transform=transform,
+            transforms=transform,
             test_size=test_size,
             n_jobs=self.n_jobs,
             random_state=self.random_state,
@@ -124,7 +123,7 @@ class Friday :
         training_config = self.training_config
 
         gen = 20 if 'gen' not in training_config else training_config['gen']
-        population = 50 if 'population' not in training_config else training_config['population']
+        population = 100 if 'population' not in training_config else training_config['population']
         offspring =population if 'offspring' not in training_config else training_config['offspring']
         mutation_rate = 0.8 if 'mutation_rate' not in training_config else training_config['mutation_rate']
         crossover_rate = 0.2 if 'crossover_rate' not in training_config else training_config['crossover_rate']
@@ -181,22 +180,22 @@ class Friday :
 
     def test(self, X_test=None, y_test=None):
 
-        if self.scoring_function is None :
-            if self.classification :
-                scorer, _ = metrics['accuracy']
-            else :
-                scorer, _ = metrics['explained_variance']
+        if self.classification :
+            metrics = c_metrics
         else :
-            scorer, _ = metrics[self.scoring_function]
-
+            metrics = r_metrics
         if X_test is not None and y_test is not None :
             self.X_test = X_test
             self.y_test = y_test
         elif self.X_test is None and self.y_test is None :
             raise ValueError('No data is provided')
         y_pred = self.predict(self.X_test)
-        score = scorer(self.y_test, y_pred)
-        return score
+        for scoring_function in metrics: 
+            scorer, _ = metrics[scoring_function]
+            score = scorer(self.y_test, y_pred)
+
+            print(scoring_function + ' = ' + str(score))
+
 
     def save_model(self, filename, path) :
 
