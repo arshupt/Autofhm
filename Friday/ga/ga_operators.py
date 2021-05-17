@@ -28,8 +28,9 @@ def cxOnePoint(ind1, ind2):
         node1, node2  = node
         if node1!=node2 :
             indexList.append(i)
-    index = random.choice(indexList)
-    ind1[index], ind2[index] = ind2[index], ind1[index]
+    if len(indexList) != 0 :
+        index = random.choice(indexList)
+        ind1[index], ind2[index] = ind2[index], ind1[index]
     return ind1, ind2
 
 
@@ -97,10 +98,8 @@ def eaMuPlusLambda(population, toolbox, mu, lambda_, cxpb, mutpb, ngen, halloffa
         halloffame.update(population)
 
     for gen in range(1, ngen + 1):
-        
         offspring = varAnd(population, toolbox, lambda_, cxpb, mutpb)
         invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
-        # print(invalid_ind)
         fitnesses = toolbox.evaluate(invalid_ind)
         for ind, fit in zip(invalid_ind, fitnesses):
             ind.fitness.values = fit

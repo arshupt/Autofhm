@@ -22,7 +22,7 @@ class Features(object):
         primitives=None,
         corr_threshold=0.8,
         scale=None,
-        transform=None,
+        transforms=None,
         n_jobs=-1,
         test_size=0.2,
         random_state=30
@@ -38,7 +38,7 @@ class Features(object):
         self.corr_threshold = corr_threshold
         self.variables = dict()
         self.columns = set()
-        self.transform = transform
+        self.transforms= transforms
         self.scale_mode = scale
         self.n_jobs = n_jobs if n_jobs!=-1 else cpu_count()
         self.test_size = test_size

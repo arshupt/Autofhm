@@ -9,7 +9,7 @@ import numpy as np
 from sklearn.model_selection import KFold
 from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 
-from .metrics import metrics
+from .metrics import c_metrics, r_metrics
 
 def pareto_eq(ind1, ind2):
             return np.allclose(ind1.fitness.values, ind2.fitness.values)
@@ -205,7 +205,10 @@ def cv_score(model, features, targets, cv, scoring_function, random_state):
             warnings.filterwarnings('ignore')
             features = features.to_numpy()
             targets = targets.to_numpy()
-            scorer, lowerIsBetter = metrics[scoring_function]
+            if scoring_function in c_metrics :
+                scorer, lowerIsBetter = c_metrics[scoring_function]
+            else :
+                scorer, lowerIsBetter = r_metrics[scoring_function]
             cv_score = []
             for train_idx, test_idx in folds.split(features):
 
@@ -215,7 +218,6 @@ def cv_score(model, features, targets, cv, scoring_function, random_state):
                 cv_score.append(scorer(y_test, y_pred))
 
         cv_score = np.array(cv_score)
-        print(cv_score)
         nz = np.count_nonzero(np.isnan(cv_score))
         if len(cv_score) - nz == 0 :
             return -float('inf')
