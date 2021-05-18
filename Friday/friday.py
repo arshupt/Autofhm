@@ -167,7 +167,8 @@ class Friday :
             np.random.seed(self.random_state)
 
         self._model = self._get_optimised_pipeline()
-
+        print("Model : ",end="")
+        print(self._model)
 
     def predict(self, features):
 

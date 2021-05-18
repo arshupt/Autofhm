@@ -34,7 +34,8 @@
     },
     "training_mode" : {
         "mode": "regression",
-        "scoring_function":"mean_squared_error"
+        "population":50,
+        "gen":20
 
     }
 }
