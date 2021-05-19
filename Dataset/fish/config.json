@@ -8,9 +8,9 @@
             {
                 "id": "fish",
                 "entitySet": "Fish",
-                "target_column": "Species",
+                "target_column": "Weight",
                 "variable_types": {
-                    "Weight": "numerical",
+                    "Species": "categorical",
                     "Length1": "numerical",
                     "Length2": "numerical",
                     "Length3": "numerical",
@@ -33,8 +33,7 @@
 
     },
     "training_mode" : {
-        "mode": "classification",
-        "scoring_function": "accuracy"
+        "mode": "regression"
 
     }
 }

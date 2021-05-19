@@ -175,6 +175,8 @@ class Friday :
         self._model = self._get_optimised_pipeline()
         self.console.log("Genetic Algorithm Complete.")
         self.console.stop_pb()
+        print("\nModel = ",end="")
+        print(self._model)
 
 
     def predict(self, features):
@@ -202,7 +204,7 @@ class Friday :
             scorer, _ = metrics[scoring_function]
             score = scorer(self.y_test, y_pred)
 
-            self.console.print(scoring_function + ' = ' + str(score))
+            self.console.print(f"{scoring_function:<20} {' = ':^15} {str(score):<10}")
 
 
     def save_model(self, filename, path) :
