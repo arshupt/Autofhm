@@ -23,13 +23,13 @@ class GeneticAlgo :
     def __init__(self,generations=20, population_size=100, offspring_size=None,
                  mutation_rate=0.8, crossover_rate=0.2,
                  cv=5, n_jobs=-1,random_state=None, 
-                 config_dict=None, classification=True, scoring_function=None) :
+                 config_dict=None, classification=True, scoring_function=None, console=None) :
         
         self._pareto_front = None
         self._optimized_pipeline = None
         self._fitted_pipeline = None
         self._pop = None
-
+        self.console = console
         self.population_size = population_size
         self.generations = generations
         self.offspring_size = population_size if offspring_size is None else offspring_size
@@ -117,7 +117,7 @@ class GeneticAlgo :
         self._toolbox.register('mutate', self._random_mutation_operator)
 
     def optimise(self, features, classes, sample_weight=None):
-
+        self.console.log("Starting GA")
         features = features.astype(np.float64)
 
         if self.random_state is not None:
@@ -134,10 +134,10 @@ class GeneticAlgo :
             pop = eaMuPlusLambda(population=pop, toolbox=self._toolbox,
                 mu=self.population_size, lambda_=self.offspring_size,
                 cxpb=self.cxpb, mutpb=self.mutpb,
-                ngen=self.generations, halloffame=self._pareto_front)
+                ngen=self.generations,console=self.console, halloffame=self._pareto_front)
 
         except (KeyboardInterrupt, SystemExit):
-            print('Keyboard interrupt!. Will use the best pipeline so far')
+            self.console.log('Keyboard interrupt!. Will use the best pipeline so far')
 
         finally:
             if self._pareto_front:

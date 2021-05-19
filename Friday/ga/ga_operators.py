@@ -96,8 +96,9 @@ def eaMuPlusLambda(population, toolbox, mu, lambda_, cxpb, mutpb, ngen, halloffa
 
     if halloffame is not None:
         halloffame.update(population)
-
+    console.start_pb_loading()
     for gen in range(1, ngen + 1):
+        console.update_current(f"Generation [{gen}/{ngen}]")
         offspring = varAnd(population, toolbox, lambda_, cxpb, mutpb)
         invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
         fitnesses = toolbox.evaluate(invalid_ind)
@@ -108,5 +109,7 @@ def eaMuPlusLambda(population, toolbox, mu, lambda_, cxpb, mutpb, ngen, halloffa
             halloffame.update(offspring)
 
         population = toolbox.select(population + offspring, mu)
+        console.advance(100/ngen)
+        console.log(f"Generation {gen} Complete.")
 
     return population
