@@ -12,6 +12,7 @@ from Friday.utils.parse_util import parse_json, parse_xml, parse_yaml
 from Friday.utils.utils import cv_score
 from Friday.feature.features import Features
 from Friday.ga.ga import GeneticAlgo
+from Friday.utils.console import Console
 
 class Friday :
 
@@ -33,6 +34,7 @@ class Friday :
         self.n_jobs = -1 if 'n_jobs' not in self.training_config else self.training_config['n_jobs']
         self.scoring_function = None if 'scoring_function' not in self.training_config else self.training_config['scoring_function']
         self.classification = True if self.training_config['mode']=='classification' else False
+        self.console = Console()
 
     def _handle_config(self) :
 
@@ -107,10 +109,12 @@ class Friday :
             random_state=self.random_state,
 
         )
+        self.console.start_pb("Feature Engineering")
         with warnings.catch_warnings() :
             warnings.filterwarnings('ignore')
-
             self.X_train, self.X_test, self.y_train, self.y_test = self.feature.build()
+            self.console.log("Feature Engineering Complete.")
+        self.console.stop_pb()
 
     def get_test_data(self, n=10) :
 
@@ -149,7 +153,8 @@ class Friday :
             random_state=self.random_state,
             config_dict=config_dict,
             classification=self.classification,
-            scoring_function=self.scoring_function
+            scoring_function=self.scoring_function,
+            console=self.console
         )
 
         return ga.optimise(self.X_train, self.y_train)
@@ -166,9 +171,11 @@ class Friday :
             random.seed(self.random_state)
             np.random.seed(self.random_state)
 
+        self.console.start_pb("Genetic Algorithm ...")
         self._model = self._get_optimised_pipeline()
-        print("Model : ",end="")
-        print(self._model)
+        self.console.log("Genetic Algorithm Complete.")
+        self.console.stop_pb()
+
 
     def predict(self, features):
 
@@ -195,7 +202,7 @@ class Friday :
             scorer, _ = metrics[scoring_function]
             score = scorer(self.y_test, y_pred)
 
-            print(scoring_function + ' = ' + str(score))
+            self.console.print(scoring_function + ' = ' + str(score))
 
 
     def save_model(self, filename, path) :
@@ -206,7 +213,7 @@ class Friday :
         except Exception as e: 
             raise Exception(e)
 
-        print(f"Model saved to the folder {path} with name {model_name}")
+        self.console.print(f"Model saved to the folder {path} with name {model_name}")
 
     def load_model(self, path) :
 
@@ -215,4 +222,4 @@ class Friday :
         except  Exception as e :
             raise Exception(e)
         self._model = model
-        print('Done!')
+        self.console.print('Done!')
