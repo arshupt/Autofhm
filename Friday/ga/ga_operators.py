@@ -87,7 +87,7 @@ def varAnd(population, toolbox, lambda_, cxpb, mutpb):
     offspring = random.sample(offspring, lambda_)
     return offspring
 
-def eaMuPlusLambda(population, toolbox, mu, lambda_, cxpb, mutpb, ngen, halloffame=None):
+def eaMuPlusLambda(population, toolbox, mu, lambda_, cxpb, mutpb, ngen, console,halloffame=None):
 
     invalid_ind = [ind for ind in population if not ind.fitness.valid]
     fitnesses = toolbox.evaluate(invalid_ind)
