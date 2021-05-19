@@ -202,7 +202,7 @@ class Friday :
             scorer, _ = metrics[scoring_function]
             score = scorer(self.y_test, y_pred)
 
-            print(scoring_function + ' = ' + str(score))
+            self.console.print(scoring_function + ' = ' + str(score))
 
 
     def save_model(self, filename, path) :
@@ -213,7 +213,7 @@ class Friday :
         except Exception as e: 
             raise Exception(e)
 
-        print(f"Model saved to the folder {path} with name {model_name}")
+        self.console.print(f"Model saved to the folder {path} with name {model_name}")
 
     def load_model(self, path) :
 
@@ -222,4 +222,4 @@ class Friday :
         except  Exception as e :
             raise Exception(e)
         self._model = model
-        print('Done!')
+        self.console.print('Done!')

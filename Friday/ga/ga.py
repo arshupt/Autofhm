@@ -53,7 +53,7 @@ class GeneticAlgo :
         if n_jobs == -1:
             self.n_jobs = cpu_count()
         elif n_jobs > cpu_count():
-            print(f"n_jobs given is more than the number of cores available, settinr n_jobs to {cpu_count()}")
+            self.console.log(f"n_jobs given is more than the number of cores available, settinr n_jobs to {cpu_count()}")
             self.n_jobs = cpu_count()
         else :
             self.n_jobs = n_jobs
@@ -148,7 +148,7 @@ class GeneticAlgo :
                         top_score = pipeline_scores.wvalues[1]
 
                 if not self._optimized_pipeline:
-                    print('No model is optimized. Please re run the program after checking the config')
+                    self.console.log('No model is optimized. Please re run the program after checking the config')
                     return None
                 else:
                     self._fitted_pipeline = self._toolbox.compile(expr=self._optimized_pipeline)
