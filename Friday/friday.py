@@ -6,12 +6,14 @@ import pickle
 
 import pandas as pd
 import numpy as np
+
 from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
+
 from Friday.utils.metrics import r_metrics, c_metrics
 from Friday.utils.parse_util import parse_json, parse_xml, parse_yaml
-from Friday.utils.utils import cv_score
 from Friday.feature.features import Features
 from Friday.ga.ga import GeneticAlgo
+from Friday.utils.console import Console
 
 class Friday :
 
@@ -26,6 +28,7 @@ class Friday :
         self.y_test = None
         self._model = None
         self.feature = None
+        self.console = Console()
 
         self.random_state = random_state
         self.feature_config, self.model_config, self.training_config = self._handle_config()  
@@ -107,10 +110,13 @@ class Friday :
             random_state=self.random_state,
 
         )
+        
+        self.console.start_pb("Feature Engineering")
         with warnings.catch_warnings() :
             warnings.filterwarnings('ignore')
-
             self.X_train, self.X_test, self.y_train, self.y_test = self.feature.build()
+            self.console.log("Feature Engineering Complete.")
+        self.console.stop_pb()
 
     def get_test_data(self, n=10) :
 
@@ -149,7 +155,8 @@ class Friday :
             random_state=self.random_state,
             config_dict=config_dict,
             classification=self.classification,
-            scoring_function=self.scoring_function
+            scoring_function=self.scoring_function,
+            console=self.console
         )
 
         return ga.optimise(self.X_train, self.y_train)
@@ -166,7 +173,12 @@ class Friday :
             random.seed(self.random_state)
             np.random.seed(self.random_state)
 
+        self.console.start_pb("Genetic Algorithm ...")
         self._model = self._get_optimised_pipeline()
+        self.console.log("Genetic Algorithm Complete.")
+        self.console.stop_pb()
+        print("\nModel = ",self._model)
+        print()
 
 
     def predict(self, features):
@@ -190,12 +202,14 @@ class Friday :
         elif self.X_test is None and self.y_test is None :
             raise ValueError('No data is provided')
         y_pred = self.predict(self.X_test)
+
         for scoring_function in metrics: 
             scorer, _ = metrics[scoring_function]
             score = scorer(self.y_test, y_pred)
 
-            print(scoring_function + ' = ' + str(score))
-
+            self.console.print(f"{scoring_function:<20} {' = ':^15} {str(score):<10}")
+        for z in zip(y_pred, self.y_test) :
+            print(z, end=' ')
 
     def save_model(self, filename, path) :
 
@@ -205,7 +219,7 @@ class Friday :
         except Exception as e: 
             raise Exception(e)
 
-        print(f"Model saved to the folder {path} with name {model_name}")
+        self.console.print(f"Model saved to the folder {path} with name {model_name}")
 
     def load_model(self, path) :
 
@@ -214,4 +228,4 @@ class Friday :
         except  Exception as e :
             raise Exception(e)
         self._model = model
-        print('Done!')
+        self.console.print('Done!')

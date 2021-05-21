@@ -16,7 +16,7 @@
                     "petal_width": "numerical"
                     },
                 "index": "Index",
-                "dataframe_path": "/home/rrk/AutoML-1/Dataset/iris/iris.csv"
+                "dataframe_path": "/home/rrk/AutoML/Dataset/iris/iris.csv"
             }
         ],
         "relationship": [
@@ -31,7 +31,7 @@
 
     },
     "training_mode" : {
-        "mode": "classification"
-
+        "mode": "classification",
+        "scoring_function": "accuracy"
     }
 }
