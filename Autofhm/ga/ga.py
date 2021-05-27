@@ -15,7 +15,7 @@ from copy import copy
 
 from .config_model import config_classifier, config_regressor
 from .ga_operators import cxOnePoint, mutIndividual, eaMuPlusLambda
-from Friday.utils.utils import cv_score, Output_Array, pareto_eq, findOperatorClass, expr_to_tree, generate_pipeline_code
+from Autofhm.utils.utils import cv_score, Output_Array, pareto_eq, findOperatorClass, expr_to_tree, generate_pipeline_code
 
 
 class GeneticAlgo :

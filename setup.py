@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 
-setup(name='Friday',
+setup(name='Autofhm',
       version='1.0',
       description='Python Automated Machine Learning',
       packages=find_packages(),

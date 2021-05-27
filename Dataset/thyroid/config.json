@@ -1,0 +1,38 @@
+{
+    "feature" : {
+        "entity_set": {
+            "id": "Thyroid",
+            "target_entity": "thyroid"
+        },
+        "entities": [
+            {
+                "id": "thyroid",
+                "entitySet": "Thyroid",
+                "target_column": "class",
+                "variable_types": {
+                    "att1": "numerical",
+                    "att2": "numerical",
+                    "att3": "numerical",
+                    "att4": "numerical",
+                    "att5": "numerical"
+                    },
+                "index": "Index",
+                "dataframe_path": "/home/rrk/AutoML/Dataset/thyroid/new-thyroid.csv"
+            }
+        ],
+        "relationship": [
+        ],
+        "primitives": {
+        },
+        "datapath" : [
+            "friday/config.json"
+        ]
+    },
+    "model" : {
+
+    },
+    "training_mode" : {
+        "mode": "classification"
+
+    }
+}

@@ -23,7 +23,7 @@
                     "alcohol": "numerical"
                     },
                 "index": "Index",
-                "dataframe_path": "/home/arshu/Documents/ProjectRepo/AutoML/Dataset/wine/winequality-white.csv"
+                "dataframe_path": "/home/rrk/AutoML/Dataset/wine/winequality-white.csv"
             }
         ],
         "relationship": [

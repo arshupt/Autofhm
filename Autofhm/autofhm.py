@@ -9,13 +9,13 @@ import numpy as np
 
 from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
 
-from Friday.utils.metrics import r_metrics, c_metrics
-from Friday.utils.parse_util import parse_json, parse_xml, parse_yaml
-from Friday.feature.features import Features
-from Friday.ga.ga import GeneticAlgo
-from Friday.utils.console import Console
+from Autofhm.utils.metrics import r_metrics, c_metrics
+from Autofhm.utils.parse_util import parse_json, parse_xml, parse_yaml
+from Autofhm.feature.features import Features
+from Autofhm.ga.ga import GeneticAlgo
+from Autofhm.utils.console import Console
 
-class Friday :
+class Autofhm :
 
     def __init__(self, 
                 config=None, 
@@ -131,7 +131,7 @@ class Friday :
         gen = 20 if 'gen' not in training_config else training_config['gen']
         population = 100 if 'population' not in training_config else training_config['population']
         offspring =population if 'offspring' not in training_config else training_config['offspring']
-        mutation_rate = 0.8 if 'mutation_rate' not in training_config else training_config['mutation_rate']
+        mutation_rate = 0.9 if 'mutation_rate' not in training_config else training_config['mutation_rate']
         crossover_rate = 0.2 if 'crossover_rate' not in training_config else training_config['crossover_rate']
 
         if self.classification :

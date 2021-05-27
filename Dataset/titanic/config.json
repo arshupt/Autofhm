@@ -1,0 +1,42 @@
+{
+    "feature" : {
+        "entity_set": {
+            "id": "Titanic",
+            "target_entity": "titanic"
+        },
+        "entities": [
+            {
+                "id": "titanic",
+                "entitySet": "Titanic",
+                "target_column": "Survived",
+                "variable_types": {
+                    "Pclass": "categorical",
+                    "Sex": "categorical",
+                    "Age": "numerical",
+                    "SibSp": "numerical",
+                    "Parch": "numerical",
+                    "Embarked": "categorical"
+                    },
+                "index": "PassengerId",
+                "dataframe_path": "/home/rrk/AutoML/Dataset/titanic/titanic.csv"
+            }
+        ],
+        "relationship": [
+        ],
+        "primitives": {
+        },
+        "datapath" : [
+            "friday/config.json"
+        ]
+    },
+    "model" : {
+
+    },
+    "training_mode" : {
+        "mode": "classification",
+        "scoring_function": "precision",
+        "population":50,
+        "gen":20
+
+    }
+}

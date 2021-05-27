@@ -1,9 +1,5 @@
 import numpy as np
 import random
-from deap import tools, gp
-from inspect import isclass
-from sklearn.model_selection import cross_val_score
-from sklearn.base import clone
 from collections import defaultdict
 
 def mutIndividual(ind, pset):
