@@ -15,12 +15,12 @@ from copy import copy
 
 from .config_model import config_classifier, config_regressor
 from .ga_operators import cxOnePoint, mutIndividual, eaMuPlusLambda
-from Friday.utils.utils import cv_score, Output_Array, pareto_eq, findOperatorClass, expr_to_tree, generate_pipeline_code
+from Autofhm.utils.utils import cv_score, Output_Array, pareto_eq, findOperatorClass, expr_to_tree, generate_pipeline_code
 
 
 class GeneticAlgo :
 
-    def __init__(self,generations=20, population_size=100, offspring_size=None,
+    def __init__(self,generations=20, population_size=50, offspring_size=None,
                  mutation_rate=0.8, crossover_rate=0.2,
                  cv=5, n_jobs=-1,random_state=None, 
                  config_dict=None, classification=True, scoring_function=None, console=None) :
@@ -29,7 +29,7 @@ class GeneticAlgo :
         self._optimized_pipeline = None
         self._fitted_pipeline = None
         self._pop = None
-        self.console = console
+
         self.population_size = population_size
         self.generations = generations
         self.offspring_size = population_size if offspring_size is None else offspring_size
@@ -53,10 +53,11 @@ class GeneticAlgo :
         if n_jobs == -1:
             self.n_jobs = cpu_count()
         elif n_jobs > cpu_count():
-            self.console.log(f"n_jobs given is more than the number of cores available, settinr n_jobs to {cpu_count()}")
+            print(f"n_jobs given is more than the number of cores available, settinr n_jobs to {cpu_count()}")
             self.n_jobs = cpu_count()
         else :
             self.n_jobs = n_jobs
+        self.console = console
 
         self.operators = []
         self.arguments = []
@@ -117,7 +118,7 @@ class GeneticAlgo :
         self._toolbox.register('mutate', self._random_mutation_operator)
 
     def optimise(self, features, classes, sample_weight=None):
-        self.console.log("Starting GA")
+
         features = features.astype(np.float64)
 
         if self.random_state is not None:
@@ -134,7 +135,7 @@ class GeneticAlgo :
             pop = eaMuPlusLambda(population=pop, toolbox=self._toolbox,
                 mu=self.population_size, lambda_=self.offspring_size,
                 cxpb=self.cxpb, mutpb=self.mutpb,
-                ngen=self.generations,console=self.console, halloffame=self._pareto_front)
+                ngen=self.generations, console=self.console, halloffame=self._pareto_front)
 
         except (KeyboardInterrupt, SystemExit):
             self.console.log('Keyboard interrupt!. Will use the best pipeline so far')

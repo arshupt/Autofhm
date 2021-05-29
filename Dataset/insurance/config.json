@@ -18,7 +18,7 @@
                     "region": "categorical"
                 },
                 "index": "Index",
-                "dataframe_path": "/home/arshu/Documents/ProjectRepo/AutoML/Dataset/insurance/insurance.csv"
+                "dataframe_path": "/home/rrk/AutoML/Dataset/insurance/insurance.csv"
             }
         ],
         "relationship": [
@@ -34,7 +34,7 @@
     },
     "training_mode" : {
         "mode": "regression",
-        "scoring_function": "mean_squared_error"
-
+        "scoring_function": "mean_absolute_error",
+        "gen": 10
     }
 }

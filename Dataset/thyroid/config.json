@@ -17,7 +17,7 @@
                     "att5": "numerical"
                     },
                 "index": "Index",
-                "dataframe_path": "/home/arshu/Documents/ProjectRepo/AutoML/Dataset/thyroid/new-thyroid.csv"
+                "dataframe_path": "/home/rrk/AutoML/Dataset/thyroid/new-thyroid.csv"
             }
         ],
         "relationship": [

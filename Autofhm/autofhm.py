@@ -6,15 +6,16 @@ import pickle
 
 import pandas as pd
 import numpy as np
-from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
-from Friday.utils.metrics import r_metrics, c_metrics
-from Friday.utils.parse_util import parse_json, parse_xml, parse_yaml
-from Friday.utils.utils import cv_score
-from Friday.feature.features import Features
-from Friday.ga.ga import GeneticAlgo
-from Friday.utils.console import Console
 
-class Friday :
+from sklearn.tree import DecisionTreeRegressor, DecisionTreeClassifier
+
+from Autofhm.utils.metrics import r_metrics, c_metrics
+from Autofhm.utils.parse_util import parse_json, parse_xml, parse_yaml
+from Autofhm.feature.features import Features
+from Autofhm.ga.ga import GeneticAlgo
+from Autofhm.utils.console import Console
+
+class Autofhm :
 
     def __init__(self, 
                 config=None, 
@@ -27,6 +28,7 @@ class Friday :
         self.y_test = None
         self._model = None
         self.feature = None
+        self.console = Console()
 
         self.random_state = random_state
         self.feature_config, self.model_config, self.training_config = self._handle_config()  
@@ -34,7 +36,6 @@ class Friday :
         self.n_jobs = -1 if 'n_jobs' not in self.training_config else self.training_config['n_jobs']
         self.scoring_function = None if 'scoring_function' not in self.training_config else self.training_config['scoring_function']
         self.classification = True if self.training_config['mode']=='classification' else False
-        self.console = Console()
 
     def _handle_config(self) :
 
@@ -109,6 +110,7 @@ class Friday :
             random_state=self.random_state,
 
         )
+        
         self.console.start_pb("Feature Engineering")
         with warnings.catch_warnings() :
             warnings.filterwarnings('ignore')
@@ -129,7 +131,7 @@ class Friday :
         gen = 20 if 'gen' not in training_config else training_config['gen']
         population = 100 if 'population' not in training_config else training_config['population']
         offspring =population if 'offspring' not in training_config else training_config['offspring']
-        mutation_rate = 0.8 if 'mutation_rate' not in training_config else training_config['mutation_rate']
+        mutation_rate = 0.9 if 'mutation_rate' not in training_config else training_config['mutation_rate']
         crossover_rate = 0.2 if 'crossover_rate' not in training_config else training_config['crossover_rate']
 
         if self.classification :
@@ -175,8 +177,8 @@ class Friday :
         self._model = self._get_optimised_pipeline()
         self.console.log("Genetic Algorithm Complete.")
         self.console.stop_pb()
-        print("\nModel = ",end="")
-        print(self._model)
+        print("\nModel = ",self._model)
+        print()
 
 
     def predict(self, features):
@@ -200,12 +202,14 @@ class Friday :
         elif self.X_test is None and self.y_test is None :
             raise ValueError('No data is provided')
         y_pred = self.predict(self.X_test)
+
         for scoring_function in metrics: 
             scorer, _ = metrics[scoring_function]
             score = scorer(self.y_test, y_pred)
 
             self.console.print(f"{scoring_function:<20} {' = ':^15} {str(score):<10}")
-
+        for z in zip(y_pred, self.y_test) :
+            print(z, end=' ')
 
     def save_model(self, filename, path) :
 

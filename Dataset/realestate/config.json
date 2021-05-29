@@ -18,7 +18,7 @@
                     "X6 longitude": "numerical"
                 },
                 "index": "Index",
-                "dataframe_path": "/home/arshu/Documents/ProjectRepo/AutoML/Dataset/realestate/realestate.csv"
+                "dataframe_path": "/home/rrk/AutoML/Dataset/realestate/realestate.csv"
             }
         ],
         "relationship": [
@@ -34,8 +34,7 @@
     },
     "training_mode" : {
         "mode": "regression",
-        "population":50,
-        "gen":20
+        "scoring_function":"mean_squared_error"
 
     }
 }

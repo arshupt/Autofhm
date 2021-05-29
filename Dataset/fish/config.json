@@ -10,15 +10,15 @@
                 "entitySet": "Fish",
                 "target_column": "Weight",
                 "variable_types": {
-                    "Species": "categorical",
                     "Length1": "numerical",
                     "Length2": "numerical",
                     "Length3": "numerical",
                     "Height": "numerical",
-                    "Width": "numerical"
+                    "Width": "numerical",
+                    "Species": "categorical"
                     },
                 "index": "Index",
-                "dataframe_path": "/home/arshu/Documents/ProjectRepo/AutoML/Dataset/fish/fish.csv"
+                "dataframe_path": "/home/rrk/AutoML/Dataset/fish/fish.csv"
             }
         ],
         "relationship": [
@@ -34,6 +34,5 @@
     },
     "training_mode" : {
         "mode": "regression"
-
     }
 }

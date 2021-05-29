@@ -10,7 +10,7 @@
                 "entitySet": "Titanic",
                 "target_column": "Survived",
                 "variable_types": {
-                    "Pclass": "numerical",
+                    "Pclass": "categorical",
                     "Sex": "categorical",
                     "Age": "numerical",
                     "SibSp": "numerical",
@@ -18,7 +18,7 @@
                     "Embarked": "categorical"
                     },
                 "index": "PassengerId",
-                "dataframe_path": "/home/arshu/Documents/ProjectRepo/AutoML/Dataset/titanic/titanic.csv"
+                "dataframe_path": "/home/rrk/AutoML/Dataset/titanic/titanic.csv"
             }
         ],
         "relationship": [
@@ -34,6 +34,7 @@
     },
     "training_mode" : {
         "mode": "classification",
+        "scoring_function": "precision",
         "population":50,
         "gen":20
 
