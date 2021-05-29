@@ -33,7 +33,7 @@ class Features(object):
         self.entities = entities
         self.target = None
         self.target_entity = target_entity
-        self.primitives = primitives,
+        self.primitives = primitives
         self.relationships = relationships
         self.corr_threshold = corr_threshold
         self.variables = dict()
@@ -49,11 +49,13 @@ class Features(object):
         self.entity_set, self.target, self.variables = self.create_entity_set(self.entities, self.relationships)
         
         if len(self.entities)==1 :
-            feature_matrix, columns = dfs(entityset=self.entity_set, target_entity=self.target_entity, trans_primitives=['add_numeric', 'multiply_numeric'])
+            primitives = self.primitives if self.primitives else ['add_numeric','multiply_numeric']
+            feature_matrix, columns = dfs(entityset=self.entity_set, target_entity=self.target_entity, trans_primitives=primitives)
         else :
             feature_matrix, columns = dfs(
                     entityset=self.entity_set,
-                    target_entity=self.target_entity
+                    target_entity=self.target_entity,
+                    trans_primitives=self.primitives
                 )
 
         feature_matrix, columns = encode_features(feature_matrix, columns)
@@ -72,7 +74,13 @@ class Features(object):
         variable_types = {
             "numerical": set(),
             "categorical": set(),
-            "boolean": set()
+            "boolean": set(),
+            "discrete":set(),
+            "index":set(),
+            "id":set(),
+            "datetime":set(),
+            "timedelta":set(),
+            "text":set()
         }
         for entity in entities:
             entity_id = entity["id"]
@@ -97,7 +105,7 @@ class Features(object):
                 )
 
         def entity_relationships(relationships):
-
+            nonlocal entity_set
             if relationships is None:
                 return
             for relationship in relationships:
