@@ -208,8 +208,6 @@ class Autofhm :
             score = scorer(self.y_test, y_pred)
 
             self.console.print(f"{scoring_function:<20} {' = ':^15} {str(score):<10}")
-        for z in zip(y_pred, self.y_test) :
-            print(z, end=' ')
 
     def save_model(self, filename, path) :
 
