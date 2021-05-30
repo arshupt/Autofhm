@@ -49,7 +49,9 @@ class Features(object):
         self.entity_set, self.target, self.variables = self.create_entity_set(self.entities, self.relationships)
         
         if len(self.entities)==1 :
+
             primitives = self.primitives if self.primitives else ['add_numeric','multiply_numeric']
+
             feature_matrix, columns = dfs(entityset=self.entity_set, target_entity=self.target_entity, trans_primitives=primitives)
         else :
             feature_matrix, columns = dfs(

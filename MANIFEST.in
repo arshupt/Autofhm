@@ -1,0 +1,6 @@
+include *.txt
+include *.sh
+include *.md
+include LICENSE
+recursive-include Autofhm *.py
+recursive-include Dataset *.json *.csv
