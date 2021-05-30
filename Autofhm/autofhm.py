@@ -47,7 +47,7 @@ class Autofhm :
         if isinstance(config, dict):
             feature_config = config['feature']
             model_config = config['model']
-            training_config = config['train_mode']
+            training_config = config['training_mode']
 
         elif isinstance(config, str):
             FOMRAT = ['yaml', 'xml', 'json']
