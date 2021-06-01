@@ -18,7 +18,7 @@
                     "Species": "categorical"
                     },
                 "index": "Index",
-                "dataframe_path": "/home/rrk/AutoML/Dataset/fish/fish.csv"
+                "dataframe_path": "test/fish/fish.csv"
             }
         ],
         "relationship": [

@@ -72,7 +72,7 @@
                     "attribute_60": "numerical"
                 },
                 "index": "index",
-                "dataframe_path": "/home/rrk/AutoML/Dataset/Sonar/sonar_csv.csv"
+                "dataframe_path": "test/Sonar/sonar_csv.csv"
             }
         ],
         "relationship": [

@@ -19,7 +19,7 @@
                     "SOP": "numerical"
                     },
                 "index": "Serial No",
-                "dataframe_path": "/home/rrk/AutoML/Dataset/admission_predict/Admission_Predict.csv"
+                "dataframe_path": "test/admission_predict/Admission_Predict.csv"
             }
         ],
         "relationship": [
