@@ -20,7 +20,11 @@ class Autofhm :
     def __init__(self, 
                 config=None, 
                 random_state=42) :
+        """Initialse the class. 
 
+            `config` : Contains the full path to the configration file
+            `random_State` : A random value to be used as seed(Optional)
+        """
         self._config = config
         self.X_train = None
         self.X_test = None
@@ -85,7 +89,10 @@ class Autofhm :
         return feature_config, model_config, training_config
 
     def get_features(self) :  
-
+        """ Perform feature engineering on the given dataset. Make sure the dataset path inside configruation file is valid. Full path is preferred.
+        
+        Feature engineered dataset will be stored inside the only in the model itself.
+        """
         id = self.feature_config['entity_set']['id']
         target_entity = self.feature_config['entity_set']['target_entity']
         primitives = self.feature_config['primitives']
@@ -119,7 +126,10 @@ class Autofhm :
         self.console.stop_pb()
 
     def get_test_data(self, n=10) :
-
+        """ Returns the test data used to evalute the model. 
+        
+        If get_features() is called before hand the this function reflects the modified dataset. 
+        """
         return pd.merge(self.X_test, self.y_test, left_index=True, right_index=True).sample(n)
 
     def _get_optimised_pipeline(self) :
@@ -162,7 +172,10 @@ class Autofhm :
         return ga.optimise(self.X_train, self.y_train)
 
     def fit(self, X_train=None, y_train=None):
+        """ Starts the genetic algorithm to perform model selection and hyperparameter optimisations.
 
+        refer source: Autofhm/ga/config_models.py for available models.
+        """
         if X_train is not None and y_train is not None :
             self.X_train = X_train
             self.y_train = y_train
@@ -182,7 +195,11 @@ class Autofhm :
 
 
     def predict(self, features):
+        """predict for new values given inside features.
+            `features`: If feature engineered this must also reflect the new dataset. 
 
+            Note: Can useget_test_data() to get the test data
+        """
         if not self._model:
             raise RuntimeError('Optimised model not found, please call the fit() first or fit_predict() first')
 
@@ -191,7 +208,12 @@ class Autofhm :
         return self._model.predict(features)
 
     def test(self, X_test=None, y_test=None):
-
+        """ test the generated model.
+            X_train: optional
+            Y_train: optional
+         
+         Uses the test portion of the provided dataset if none given.
+        """
         if self.classification :
             metrics = c_metrics
         else :
