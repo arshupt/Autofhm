@@ -175,10 +175,10 @@ def expr_to_tree(ind, pset):
     return tree
 
 
-def generate_pipeline_code(pipeline_tree, operators):
-    steps = _process_operator(pipeline_tree, operators)
-    pipeline_text = ''.join(steps)
-    return pipeline_text
+def generate_model_code(model_tree, operators):
+    steps = _process_operator(model_tree, operators)
+    model_text = ''.join(steps)
+    return model_text
 
 
 def _process_operator(operator, operators, depth=0):
@@ -186,12 +186,12 @@ def _process_operator(operator, operators, depth=0):
     op_name = operator[0]
 
     input_name, args = operator[1], operator[2:]
-    tpot_op = get_by_name(op_name, operators)
+    _op = get_by_name(op_name, operators)
 
     if input_name != 'input_matrix':
         steps.extend(_process_operator(input_name, operators, depth + 1))
 
-    steps.append(tpot_op.export(*args))
+    steps.append(_op.export(*args))
     return steps
 
 
