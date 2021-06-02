@@ -132,7 +132,7 @@ class Autofhm :
         """
         return pd.merge(self.X_test, self.y_test, left_index=True, right_index=True).sample(n)
 
-    def _get_optimised_pipeline(self) :
+    def _get_optimised_model(self) :
 
         config_dict = self.model_config if self.model_config else None
 
@@ -187,7 +187,7 @@ class Autofhm :
             np.random.seed(self.random_state)
 
         self.console.start_pb("Genetic Algorithm ...")
-        self._model = self._get_optimised_pipeline()
+        self._model = self._get_optimised_model()
         self.console.log("Genetic Algorithm Complete.")
         self.console.stop_pb()
         print("\nModel = ",self._model)

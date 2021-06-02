@@ -15,7 +15,7 @@ from copy import copy
 
 from .config_model import config_classifier, config_regressor
 from .ga_operators import cxOnePoint, mutIndividual, eaMuPlusLambda
-from Autofhm.utils.utils import cv_score, Output_Array, pareto_eq, findOperatorClass, expr_to_tree, generate_pipeline_code
+from Autofhm.utils.utils import cv_score, Output_Array, pareto_eq, findOperatorClass, expr_to_tree, generate_model_code
 
 
 class GeneticAlgo :
@@ -26,8 +26,8 @@ class GeneticAlgo :
                  config_dict=None, classification=True, scoring_function=None, console=None) :
         
         self._pareto_front = None
-        self._optimized_pipeline = None
-        self._fitted_pipeline = None
+        self._optimized_model = None
+        self._fitted_model = None    
         self._pop = None
 
         self.population_size = population_size
@@ -117,7 +117,7 @@ class GeneticAlgo :
         self._toolbox.register('expr_mut', self._gen_grow, min_=1, max_=1)
         self._toolbox.register('mutate', self._random_mutation_operator)
 
-    def optimise(self, features, classes, sample_weight=None):
+    def optimise(self, features, classes):
 
         features = features.astype(np.float64)
 
@@ -138,24 +138,24 @@ class GeneticAlgo :
                 ngen=self.generations, console=self.console, halloffame=self._pareto_front)
 
         except (KeyboardInterrupt, SystemExit):
-            self.console.log('Keyboard interrupt!. Will use the best pipeline so far')
+            self.console.log('Keyboard interrupt!. Will use the best model so far')
 
         finally:
             if self._pareto_front:
                 top_score = -float('inf')
-                for pipeline, pipeline_scores in zip(self._pareto_front.items, reversed(self._pareto_front.keys)):
-                    if pipeline_scores.wvalues[1] > top_score:
-                        self._optimized_pipeline = pipeline
-                        top_score = pipeline_scores.wvalues[1]
+                for model, model_scores in zip(self._pareto_front.items, reversed(self._pareto_front.keys)):
+                    if model_scores.wvalues[1] > top_score:
+                        self._optimized_model = model
+                        top_score = model_scores.wvalues[1]
 
-                if not self._optimized_pipeline:
+                if not self._optimized_model:
                     self.console.log('No model is optimized. Please re run the program after checking the config')
                     return None
                 else:
-                    self._fitted_pipeline = self._toolbox.compile(expr=self._optimized_pipeline)
+                    self._fitted_model = self._toolbox.compile(expr=self._optimized_model)
 
-                    self._fitted_pipeline.fit(features, classes)
-                    return self._fitted_pipeline
+                    self._fitted_model.fit(features, classes)
+                    return self._fitted_model
             
     
     def _mate_operator(self, ind1, ind2):
@@ -191,7 +191,7 @@ class GeneticAlgo :
         
         fitnesses_dict = {}
         eval_individuals_str = []
-        sklearn_pipeline_list = []
+        sklearn_model_list = []
         operator_count_list = []
         test_idx_list = []
         for indidx, individual in enumerate(individuals):
@@ -202,7 +202,7 @@ class GeneticAlgo :
        
             else:
                 try:
-                    sklearn_pipeline = self._toolbox.compile(expr=individual)
+                    sklearn_model = self._toolbox.compile(expr=individual)
                     operator_count = 0
                     for i in range(len(individual)):
                         node = individual[i]
@@ -215,15 +215,15 @@ class GeneticAlgo :
                     continue
                 eval_individuals_str.append(individual_str)
                 operator_count_list.append(operator_count)
-                sklearn_pipeline_list.append(sklearn_pipeline)
+                sklearn_model_list.append(sklearn_model)
                 test_idx_list.append(indidx)
 
         resulting_score_list = []
-        for chunk_idx in range(0, len(sklearn_pipeline_list),self.n_jobs*4):
+        for chunk_idx in range(0, len(sklearn_model_list),self.n_jobs*4):
             parallel = Parallel(n_jobs=self.n_jobs, verbose=0, pre_dispatch='2*n_jobs')
-            tmp_result_score = parallel(delayed(cv_score)(sklearn_pipeline, features, classes,
+            tmp_result_score = parallel(delayed(cv_score)(sklearn_model, features, classes,
                                         self.cv, self.scoring_function, self.random_state)
-                                        for sklearn_pipeline in sklearn_pipeline_list[chunk_idx:chunk_idx+self.n_jobs*4])
+                                        for sklearn_model in sklearn_model_list[chunk_idx:chunk_idx+self.n_jobs*4])
             for val in tmp_result_score:
                 if val == 'Timeout':
                     resulting_score_list.append(-float('inf'))
@@ -242,9 +242,9 @@ class GeneticAlgo :
             fitnesses_ordered.append(fitnesses_dict[key])
         return fitnesses_ordered
 
-    def _set_param_recursive(self, pipeline_steps, parameter, value):
+    def _set_param_recursive(self, model_steps, parameter, value):
 
-        for (_, obj) in pipeline_steps:
+        for (_, obj) in model_steps:
             recursive_attrs = ['steps', 'transformer_list', 'estimators']
             for attr in recursive_attrs:
                 if hasattr(obj, attr):
@@ -257,6 +257,6 @@ class GeneticAlgo :
                 setattr(obj, parameter, value)
 
     def _compile_to_sklearn(self, expr):
-        sklearn_pipeline_str = generate_pipeline_code(expr_to_tree(expr, self._pset), self.operators)
-        model = eval(sklearn_pipeline_str, self.operators_context)
+        sklearn_model_str = generate_model_code(expr_to_tree(expr, self._pset), self.operators)
+        model = eval(sklearn_model_str, self.operators_context)
         return model
