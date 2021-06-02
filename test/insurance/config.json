@@ -18,7 +18,7 @@
                     "region": "categorical"
                 },
                 "index": "Index",
-                "dataframe_path": "/home/rrk/AutoML/Dataset/insurance/insurance.csv"
+                "dataframe_path": "test/insurance/insurance.csv"
             }
         ],
         "relationship": [

@@ -18,7 +18,7 @@
                     "Embarked": "categorical"
                     },
                 "index": "PassengerId",
-                "dataframe_path": "/home/rrk/AutoML/Dataset/titanic/titanic.csv"
+                "dataframe_path": "test/titanic/titanic.csv"
             }
         ],
         "relationship": [

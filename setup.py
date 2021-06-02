@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 setup(name='Autofhm',
-      version='2.0.2',
+      version='2.0.3',
       description='Python Automated Machine Learning',
       include_package_data=True,
       packages=find_packages(),

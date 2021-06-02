@@ -25,7 +25,7 @@
                     "lstat": "numerical"
                 },
                 "index": "Index",
-                "dataframe_path": "/home/rrk/AutoML/Dataset/Boston/Boston.csv"
+                "dataframe_path": "test/Boston/Boston.csv"
             }
         ],
         "relationship": [

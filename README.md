@@ -1,17 +1,24 @@
 # AutoML
 
-# Running
+An automated machine learning tool that performs auto-feature engineering, model selection and hyperparameter optimisation. This project uses Genetic Algorithm to perform the later two.
 
-Run the following commands in project root
+## Installation
 
-1. Run `python3 -m venv .venv`  - This is only done once. Try restaring the editor the VSCODE shows local virtual enviroment.
-2. Run `pip install -r requirements.txt` (After activating the virtual enviroment)
-3. 
-## Structure of Project
+1. `pip install Autofhm` 
+2. To install from source `pip install -e .` in the project root directory
+3. `pip install rich[jupyter]` If using jupyter notebook(optional)
 
-- `friday/` - source code area
-- `docs/` - any other documentation files
-- `tests/` - a directory to hold the tests for the projects  
+
+## To run tests
+
+- Run `python test/all.py` inside the project root folder.
+- To build a specific model run `python test/{dataset}/test.py`. Where the directory is the test datasets folder.
+
+
+## Config file format
+
+1. Refer [docs/config_file_samples](docs/config_file_samples) for sample confgruation file. Json file contains the default values of each variable.
+
 
 ## Submitting Code
 
