@@ -224,12 +224,14 @@ class Autofhm :
         elif self.X_test is None and self.y_test is None :
             raise ValueError('No data is provided')
         y_pred = self.predict(self.X_test)
-
+        scores = {}
         for scoring_function in metrics: 
             scorer, _ = metrics[scoring_function]
             score = scorer(self.y_test, y_pred)
+            scores[scorer] = score
 
             self.console.print(f"{scoring_function:<20} {' = ':^15} {str(score):<10}")
+        return scores
 
     def save_model(self, filename, path) :
 

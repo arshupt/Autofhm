@@ -55,6 +55,7 @@ ENV/
 
 .pytest_cache
 
+test/*.log
 
 
 
