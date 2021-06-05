@@ -1,5 +1,5 @@
 {
-    "feature" : {
+    "feature": {
         "entity_set": {
             "id": "Titanic",
             "target_entity": "titanic"
@@ -16,27 +16,16 @@
                     "SibSp": "numerical",
                     "Parch": "numerical",
                     "Embarked": "categorical"
-                    },
+                },
                 "index": "PassengerId",
                 "dataframe_path": "test/titanic/titanic.csv"
             }
-        ],
-        "relationship": [
-        ],
-        "primitives": {
-        },
-        "datapath" : [
-            "friday/config.json"
         ]
     },
-    "model" : {
-
-    },
-    "training_mode" : {
+    "training_mode": {
         "mode": "classification",
         "scoring_function": "precision",
-        "population":50,
-        "gen":20
-
+        "population": 50,
+        "gen": 20
     }
 }

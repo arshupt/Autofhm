@@ -1,5 +1,5 @@
 {
-    "feature" : {
+    "feature": {
         "entity_set": {
             "id": "Fish",
             "target_entity": "fish"
@@ -16,23 +16,13 @@
                     "Height": "numerical",
                     "Width": "numerical",
                     "Species": "categorical"
-                    },
+                },
                 "index": "Index",
-                "dataframe_path":  "test/fish_species/fish.csv"
+                "dataframe_path": "test/fish_species/fish.csv"
             }
-        ],
-        "relationship": [
-        ],
-        "primitives": {
-        },
-        "datapath" : [
-            "friday/config.json"
         ]
     },
-    "model" : {
-
-    },
-    "training_mode" : {
+    "training_mode": {
         "mode": "regression"
     }
 }

@@ -1,5 +1,5 @@
 {
-    "feature" : {
+    "feature": {
         "entity_set": {
             "id": "Thyroid",
             "target_entity": "thyroid"
@@ -15,24 +15,13 @@
                     "att3": "numerical",
                     "att4": "numerical",
                     "att5": "numerical"
-                    },
+                },
                 "index": "Index",
                 "dataframe_path": "test/thyroid/new-thyroid.csv"
             }
-        ],
-        "relationship": [
-        ],
-        "primitives": {
-        },
-        "datapath" : [
-            "friday/config.json"
         ]
     },
-    "model" : {
-
-    },
-    "training_mode" : {
+    "training_mode": {
         "mode": "classification"
-
     }
 }
