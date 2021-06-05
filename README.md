@@ -20,7 +20,7 @@ An automated machine learning tool that performs auto-feature engineering, model
 |---|---|---|--|---|---|---|
 |2021-06-05 10:03:09 |0.851261054498923|10.907589576871073|2.0325990974167425|22.489063492063487|0.8516438951901327|23.94397735595703|
 
-|Date Time|$r^2$|mean_squared_error|mean_absolute_error|max_error|explained_variance|time to build|
+|Date Time|r^2|mean_squared_error|mean_absolute_error|max_error|explained_variance|time to build|
 |---|---|---|--|---|---|---|
 |2021-06-05 10:03:09 |0.851261054498923|10.907589576871073|2.0325990974167425|22.489063492063487|0.8516438951901327|23.94397735595703|
 

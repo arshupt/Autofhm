@@ -190,6 +190,7 @@ class Autofhm :
         self._model = self._get_optimised_model()
         self.console.log("Genetic Algorithm Complete.")
         self.console.stop_pb()
+        self.console.stop_all()
         self.console.print("\nModel = "+str(self._model))
 
 
