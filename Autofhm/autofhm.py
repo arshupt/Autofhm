@@ -67,7 +67,7 @@ class Autofhm :
                 if err is not None:
                     raise Exception(err.args)
                 feature_config = config_dict['feature']
-                model_config = config_dict['model']
+                model_config = {} if 'model' not in config_dict else config_dict['model']
                 training_config = config_dict['training_mode']
 
             elif index == 1:
@@ -75,7 +75,7 @@ class Autofhm :
                 if err is not None:
                     raise Exception(err.args)
                 feature_config = config_dict['feature']
-                model_config = config_dict['model']
+                model_config = {} if 'model' not in config_dict else config_dict['model']
                 training_config = config_dict['training_mode']
 
             elif index == 2:
@@ -83,7 +83,7 @@ class Autofhm :
                 if err is not None:
                     raise Exception(err.args)
                 feature_config = config_dict['feature']
-                model_config = config_dict['model']
+                model_config = {} if 'model' not in config_dict else config_dict['model']
                 training_config = config_dict['training_mode']
         
         return feature_config, model_config, training_config
@@ -95,9 +95,9 @@ class Autofhm :
         """
         id = self.feature_config['entity_set']['id']
         target_entity = self.feature_config['entity_set']['target_entity']
-        primitives = self.feature_config['primitives']
+        primitives = [] if 'primitives' not in  self.feature_config else self.feature_config['primitives']
         entities = self.feature_config['entities']
-        relationships = self.feature_config['relationship']
+        relationships = [] if 'relationship' not in self.feature_config else self.feature_config['relationship']
         corr_threshold = 0.9 if 'corr_threshold' not in self.feature_config else self.feature_config['corr_threshold']
         scale = None if 'scale' not in self.feature_config else self.feature_config['scale']
         transform = None if 'transform' not in self.feature_config else self.feature_config['transform']
@@ -190,8 +190,7 @@ class Autofhm :
         self._model = self._get_optimised_model()
         self.console.log("Genetic Algorithm Complete.")
         self.console.stop_pb()
-        print("\nModel = ",self._model)
-        print()
+        self.console.print("\nModel = "+str(self._model))
 
 
     def predict(self, features):

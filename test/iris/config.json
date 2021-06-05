@@ -1,5 +1,5 @@
 {
-    "feature" : {
+    "feature": {
         "entity_set": {
             "id": "Iris",
             "target_entity": "iris"
@@ -14,23 +14,13 @@
                     "sepal_width": "numerical",
                     "petal_length": "numerical",
                     "petal_width": "numerical"
-                    },
+                },
                 "index": "Index",
                 "dataframe_path": "test/iris/iris.csv"
             }
-        ],
-        "relationship": [
-        ],
-        "primitives": {
-        },
-        "datapath" : [
-            "friday/config.json"
         ]
     },
-    "model" : {
-
-    },
-    "training_mode" : {
+    "training_mode": {
         "mode": "classification",
         "scoring_function": "accuracy"
     }

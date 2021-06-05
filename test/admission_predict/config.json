@@ -1,5 +1,5 @@
 {
-    "feature" : {
+    "feature": {
         "entity_set": {
             "id": "admission_predict",
             "target_entity": "admission"
@@ -17,23 +17,13 @@
                     "CGPA": "numerical",
                     "Research": "numerical",
                     "SOP": "numerical"
-                    },
+                },
                 "index": "Serial No",
                 "dataframe_path": "test/admission_predict/Admission_Predict.csv"
             }
-        ],
-        "relationship": [
-        ],
-        "primitives": {
-        },
-        "datapath" : [
-            "friday/config.json"
         ]
     },
-    "model" : {
-
-    },
-    "training_mode" : {
+    "training_mode": {
         "mode": "regression"
     }
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+  <feature>
+    <entitySet>
+      <id>entity set id</id>
+    </entitySet>
+    <entities>
+      <id>entity id</id>
+      <entitySet>entity set id</entitySet>
+      <variable_types>
+        <column_name1>Variable type</column_name1>
+        <column_name2>Variable type</column_name2>
+      </variable_types>
+      <index>name of id column</index>
+      <time_index>name of time column</time_index>
+      <dataframe_path>path to dataset file</dataframe_path>
+    </entities>
+    <relationship>
+      <table1>
+        <name>table name</name>
+        <column>column name</column>
+      </table1>
+      <table2>
+        <name>table name</name>
+        <column>column name</column>
+      </table2>
+    </relationship>
+    <primitives>add_numeric</primitives>
+    <primitives>multiply_numeric</primitives>
+  </feature>
+  <model>
+    <sklearn.naive_bayes.BernoulliNB>
+      <alpha>0.001</alpha>
+      <alpha>0.01</alpha>
+      <alpha>0.1</alpha>
+      <alpha>1</alpha>
+      <alpha>10</alpha>
+      <alpha>100</alpha>
+      <fit_prior>true</fit_prior>
+      <fit_prior>false</fit_prior>
+    </sklearn.naive_bayes.BernoulliNB>
+  </model>
+  <training_mode>
+    <mode>classifiacation</mode>
+    <gen>20</gen>
+    <population>100</population>
+    <cv>5</cv>
+    <n_jobs>-1</n_jobs>
+    <scoring_function/>
+  </training_mode>
+</root>

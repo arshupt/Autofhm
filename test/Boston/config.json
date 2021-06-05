@@ -1,5 +1,5 @@
 {
-    "feature" : {
+    "feature": {
         "entity_set": {
             "id": "Boston",
             "target_entity": "boston"
@@ -27,19 +27,9 @@
                 "index": "Index",
                 "dataframe_path": "test/Boston/Boston.csv"
             }
-        ],
-        "relationship": [
-        ],
-        "primitives": {
-        },
-        "datapath" : [
-            "friday/config.json"
         ]
     },
-    "model" : {
-
-    },
-    "training_mode" : {
+    "training_mode": {
         "mode": "regression",
         "scoring_function": "max_error",
         "population": 100

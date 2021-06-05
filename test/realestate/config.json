@@ -1,5 +1,5 @@
 {
-    "feature" : {
+    "feature": {
         "entity_set": {
             "id": "Realestate",
             "target_entity": "realestate"
@@ -20,21 +20,10 @@
                 "index": "Index",
                 "dataframe_path": "test/realestate/realestate.csv"
             }
-        ],
-        "relationship": [
-        ],
-        "primitives": {
-        },
-        "datapath" : [
-            "friday/config.json"
         ]
     },
-    "model" : {
-
-    },
-    "training_mode" : {
+    "training_mode": {
         "mode": "regression",
-        "scoring_function":"mean_squared_error"
-
+        "scoring_function": "mean_squared_error"
     }
 }

@@ -1,5 +1,5 @@
 {
-    "feature" : {
+    "feature": {
         "entity_set": {
             "id": "Sonar",
             "target_entity": "sonar"
@@ -74,19 +74,9 @@
                 "index": "index",
                 "dataframe_path": "test/Sonar/sonar_csv.csv"
             }
-        ],
-        "relationship": [
-        ],
-        "primitives": {
-        },
-        "datapath" : [
-            "friday/config.json"
         ]
     },
-    "model" : {
-
-    },
-    "training_mode" : {
+    "training_mode": {
         "mode": "classification",
         "scoring_function": "recall"
     }
