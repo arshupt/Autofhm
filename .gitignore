@@ -55,7 +55,7 @@ ENV/
 
 .pytest_cache
 
-test/*.log
+*.log.csv
 
 
 
