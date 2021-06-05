@@ -1,9 +1,12 @@
 from rich.console import Console as xConsole
 from rich.progress import Progress
-
+import rich
 class Console:
     def __init__(self):
-        self.c = xConsole()
+        self.c = rich.get_console()
+        if self.c is not None:
+            rich.reconfigure()
+            self.c = rich.get_console()
         self._pb = Progress(console=self.c)
         self._main_pb = None
         
@@ -41,3 +44,6 @@ class Console:
             self._pb.update(self._main_pb)
         else:
             self.c.log("No Progress bar found")
+
+    def stop_all(self):
+        self._pb.stop()
