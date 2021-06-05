@@ -1,0 +1,38 @@
+{
+    "feature" : {
+        "entity_set": {
+            "id": "Fish",
+            "target_entity": "fish"
+        },
+        "entities": [
+            {
+                "id": "fish",
+                "entitySet": "Fish",
+                "target_column": "Weight",
+                "variable_types": {
+                    "Length1": "numerical",
+                    "Length2": "numerical",
+                    "Length3": "numerical",
+                    "Height": "numerical",
+                    "Width": "numerical",
+                    "Species": "categorical"
+                    },
+                "index": "Index",
+                "dataframe_path":  "test/fish_species/fish.csv"
+            }
+        ],
+        "relationship": [
+        ],
+        "primitives": {
+        },
+        "datapath" : [
+            "friday/config.json"
+        ]
+    },
+    "model" : {
+
+    },
+    "training_mode" : {
+        "mode": "regression"
+    }
+}

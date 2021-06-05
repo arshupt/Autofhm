@@ -14,7 +14,7 @@ An automated machine learning tool that performs auto-feature engineering, model
 - Run `python test/test.py` inside the project root folder (This takes a lot of time).
 - To build a specific model run `python test/test.py -c {dataset folder name}`. Where the directory is the test datasets folder.
 - Results will be stored at [test/results](test/results) with file name same as to the dataset Folder name.
-- The format 
+- The format and sample data shown below
 
 |Date Time|accuracy|balanced_accuracy|f1|precision|recall|time to build|
 |---|---|---|--|---|---|---|

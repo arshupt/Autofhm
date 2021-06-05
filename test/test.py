@@ -5,7 +5,7 @@ from pathlib import Path
 import sys
 from rich import print
 
-to_test = ["admission_predict","Boston","fish","insurance","iris","realestate","Sonar","thyroid","titanic"]
+to_test = ["admission_predict","Boston","fish_species","fish_weight","insurance","iris","realestate","Sonar","thyroid","titanic"]
 
 curr_directory = Path(__file__).resolve().parent
 if len(sys.argv) == 3:
