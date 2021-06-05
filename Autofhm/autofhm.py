@@ -228,7 +228,7 @@ class Autofhm :
         for scoring_function in metrics: 
             scorer, _ = metrics[scoring_function]
             score = scorer(self.y_test, y_pred)
-            scores[scorer] = score
+            scores[scoring_function] = score
 
             self.console.print(f"{scoring_function:<20} {' = ':^15} {str(score):<10}")
         return scores
